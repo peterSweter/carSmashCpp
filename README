@@ -1,0 +1,14 @@
+# carSmashCpp #
+Realtime multiplayer game for licentiate.
+
+# technology #
+
+- box2D rigid body physics engine
+- boost.beast for for web sockets handling
+- client will be written in js, there is also  planned android version
+
+# website #
+
+carsmash.io
+
+# to do: #
