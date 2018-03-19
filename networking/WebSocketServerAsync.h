@@ -12,7 +12,6 @@ class WebSocketServerAsync {
 
 public:
 
-    std::vector<int> getClients();
 
 };
 

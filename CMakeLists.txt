@@ -14,12 +14,12 @@ find_package(Boost 1.66.0)
 include_directories(${Boost_INCLUDE_DIR} ${Box2D_INCLUDE_DIR})
 link_directories(${Boost_LIBRARY_DIR} ${Box2D_LIBRARY_DIR})
 
-set(SOURCE_FILES main.cpp websocket_server_async.cpp WebSocketServerAsync.cpp WebSocketServerAsync.h)
+set(SOURCE_FILES main.cpp networking/websocket_server_async.cpp networking/WebSocketServerAsync.cpp networking/WebSocketServerAsync.h networking/Session.cpp networking/Session.h networking/Listener.cpp networking/Listener.h)
 
 add_executable (carsmashcpp
         ${BOOST_BEAST_INCLUDES}
         ${COMMON_INCLUDES}
-        websocket_server_async.cpp
+        networking/websocket_server_async.cpp
         ${SOURCE_FILES}
         )
 
