@@ -5,7 +5,7 @@
 #include "Listener.h"
 
 
-listener::listener(boost::asio::io_context &ioc, tcp::endpoint endpoint) : acceptor_(ioc), socket_(ioc) {
+Listener::Listener(boost::asio::io_context &ioc, tcp::endpoint endpoint) : acceptor_(ioc), socket_(ioc) {
 
     boost::system::error_code ec;
 
@@ -33,27 +33,27 @@ listener::listener(boost::asio::io_context &ioc, tcp::endpoint endpoint) : accep
 }
 
 // Start accepting incoming connections
-void listener::run() {
+void Listener::run() {
     if (!acceptor_.is_open())
         return;
     do_accept();
 }
 
-void listener::do_accept() {
+void Listener::do_accept() {
     acceptor_.async_accept(
             socket_,
             std::bind(
-                    &listener::on_accept,
+                    &Listener::on_accept,
                     shared_from_this(),
                     std::placeholders::_1));
 }
 
-void listener::on_accept(boost::system::error_code ec) {
+void Listener::on_accept(boost::system::error_code ec) {
     if (ec) {
         fail(ec, "accept");
     } else {
-        // Create the session and run it
-        auto newClient = std::make_shared<session>(std::move(socket_));
+        // Create the Session and run it
+        auto newClient = std::make_shared<Session>(std::move(socket_));
         clients.insert(newClient);
         newClient->run();
     }

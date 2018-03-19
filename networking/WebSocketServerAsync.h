@@ -7,11 +7,21 @@
 
 
 #include <vector>
+#include "Session.h"
+#include "Listener.h"
+
 
 class WebSocketServerAsync {
 
+    boost::asio::ip::address address;
+    unsigned short port;
+    int threads;
+
+
 public:
 
+    WebSocketServerAsync();
+    void run();
 
 };
 

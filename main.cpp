@@ -1,6 +1,11 @@
 #include <iostream>
+#include "networking/WebSocketServerAsync.h"
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    std::cout << "Test serwera: " << std::endl;
+
+    WebSocketServerAsync webSocketServerAsync;
+    webSocketServerAsync.run();
+
     return 0;
 }

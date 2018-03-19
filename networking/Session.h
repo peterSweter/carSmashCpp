@@ -28,21 +28,17 @@ namespace websocket = boost::beast::websocket;  // from <boost/beast/websocket.h
 
 //------------------------------------------------------------------------------
 
-// Report a failure
-void
-fail(boost::system::error_code ec, char const *what) {
-    std::cerr << what << ": " << ec.message() << "\n";
-}
+void fail(boost::system::error_code ec, char const *what);
 
 
-class session : public std::enable_shared_from_this<session> {
+class Session : public std::enable_shared_from_this<Session> {
     websocket::stream<tcp::socket> ws_;
     boost::asio::strand<boost::asio::io_context::executor_type> strand_;
     boost::beast::multi_buffer buffer_;
 
 public:
     // Take ownership of the socket
-    explicit session(tcp::socket socket);
+    explicit Session(tcp::socket socket);
 
 
     // Start the asynchronous operation
@@ -54,6 +50,8 @@ public:
     void on_read(boost::system::error_code ec, std::size_t bytes_transferred) ;
 
     void on_write(boost::system::error_code ec, std::size_t bytes_transferred) ;
+
+    void writeString(std::string);
 };
 
 

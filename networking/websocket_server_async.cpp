@@ -43,7 +43,7 @@ fail(boost::system::error_code ec, char const *what) {
 }
 
 // Echoes back all received WebSocket messages
-class session : public std::enable_shared_from_this<session> {
+class Session : public std::enable_shared_from_this<Session> {
     websocket::stream<tcp::socket> ws_;
     boost::asio::strand<
             boost::asio::io_context::executor_type> strand_;
@@ -52,7 +52,7 @@ class session : public std::enable_shared_from_this<session> {
 public:
     // Take ownership of the socket
     explicit
-    session(tcp::socket socket)
+    Session(tcp::socket socket)
             : ws_(std::move(socket)), strand_(ws_.get_executor()) {
     }
 
@@ -64,7 +64,7 @@ public:
                 boost::asio::bind_executor(
                         strand_,
                         std::bind(
-                                &session::on_accept,
+                                &Session::on_accept,
                                 shared_from_this(),
                                 std::placeholders::_1)));
     }
@@ -86,7 +86,7 @@ public:
                 boost::asio::bind_executor(
                         strand_,
                         std::bind(
-                                &session::on_read,
+                                &Session::on_read,
                                 shared_from_this(),
                                 std::placeholders::_1,
                                 std::placeholders::_2)));
@@ -95,7 +95,7 @@ public:
     void on_read(boost::system::error_code ec, std::size_t bytes_transferred) {
         boost::ignore_unused(bytes_transferred);
 
-        // This indicates that the session was closed
+        // This indicates that the Session was closed
         if (ec == websocket::error::closed)
             return;
 
@@ -110,7 +110,7 @@ public:
                 boost::asio::bind_executor(
                         strand_,
                         std::bind(
-                                &session::on_write,
+                                &Session::on_write,
                                 shared_from_this(),
                                 std::placeholders::_1,
                                 std::placeholders::_2)));
@@ -133,15 +133,15 @@ public:
 //------------------------------------------------------------------------------
 
 // Accepts incoming connections and launches the sessions
-class listener : public std::enable_shared_from_this<listener> {
+class Listener : public std::enable_shared_from_this<Listener> {
     tcp::acceptor acceptor_;
     tcp::socket socket_;
 
 public:
 
-    std::unordered_set<std::shared_ptr<session>> clients;
+    std::unordered_set<std::shared_ptr<Session>> clients;
 
-    listener(
+    Listener(
             boost::asio::io_context &ioc,
             tcp::endpoint endpoint)
             : acceptor_(ioc), socket_(ioc) {
@@ -183,7 +183,7 @@ public:
         acceptor_.async_accept(
                 socket_,
                 std::bind(
-                        &listener::on_accept,
+                        &Listener::on_accept,
                         shared_from_this(),
                         std::placeholders::_1));
     }
@@ -193,8 +193,8 @@ public:
         if (ec) {
             fail(ec, "accept");
         } else {
-            // Create the session and run it
-            auto newClient = std::make_shared<session>(std::move(socket_));
+            // Create the Session and run it
+            auto newClient = std::make_shared<Session>(std::move(socket_));
             clients.insert(newClient);
             newClient->run();
         }
@@ -223,7 +223,7 @@ int main(int argc, char *argv[]) {
     boost::asio::io_context ioc{threads};
 
     // Create and launch a listening port
-    std::make_shared<listener>(ioc, tcp::endpoint{address, port})->run();
+    std::make_shared<Listener>(ioc, tcp::endpoint{address, port})->run();
 
     // Run the I/O service on the requested number of threads
     std::vector<std::thread> v;

@@ -30,15 +30,15 @@ namespace websocket = boost::beast::websocket;  // from <boost/beast/websocket.h
 
 
 // Accepts incoming connections and launches the sessions
-class listener : public std::enable_shared_from_this<listener> {
+class Listener : public std::enable_shared_from_this<Listener> {
     tcp::acceptor acceptor_;
     tcp::socket socket_;
 
 public:
 
-    std::unordered_set<std::shared_ptr<session>> clients;
+    std::unordered_set<std::shared_ptr<Session>> clients;
 
-    listener(boost::asio::io_context &ioc, tcp::endpoint endpoint);
+    Listener(boost::asio::io_context &ioc, tcp::endpoint endpoint);
 
     // Start accepting incoming connections
     void run();
