@@ -11,7 +11,7 @@
 #include "Session.h"
 
 class ListenerI {
-    virtual std::mutex getMutex() = 0;
+    virtual std::mutex &getMutex() = 0;
     virtual std::queue<std::shared_ptr<Session>> & getSessionQueue() = 0;
 };
 

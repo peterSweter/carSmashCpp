@@ -6,8 +6,15 @@
 #define CARSMASHCPP_PLAYERSMANAGER_H
 
 
-class PlayersManager {
+#include "networking/ListenerI.h"
 
+class PlayersManager {
+private:
+    ListenerI & listener;
+public:
+
+    PlayersManager();
+    void update();
 };
 
 

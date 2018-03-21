@@ -6,10 +6,13 @@
 #define CARSMASHCPP_PLAYER_H
 
 
+#include "networking/SessionI.h"
+
 class Player {
-
+private:
+    SessionI &sessionI;
 public:
-
+    Player();
     void update();
 
 };

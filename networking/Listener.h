@@ -50,7 +50,7 @@ public:
     void on_accept(boost::system::error_code ec);
 
 private:
-    std::mutex getMutex() override;
+    std::mutex& getMutex() override;
 
     std::queue<std::shared_ptr<Session>> &getSessionQueue() override;
 };

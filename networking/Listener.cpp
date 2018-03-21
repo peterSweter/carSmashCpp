@@ -66,7 +66,7 @@ void Listener::on_accept(boost::system::error_code ec) {
     do_accept();
 }
 
-std::mutex Listener::getMutex() {
+std::mutex&  Listener::getMutex() {
     return mutex_;
 }
 

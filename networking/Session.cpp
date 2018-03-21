@@ -75,7 +75,7 @@ void Session::on_read(boost::system::error_code ec, std::size_t bytes_transferre
     //  boost::beast::ostream(buffer_) << "dodatkowy msg\n";
 
     std::ostringstream os;
-    os << boost::beast::buffers(buffer_);
+    os << boost::beast::buffers(buffer_.data());
     std::string strMsgJson = os.str();
 
 
