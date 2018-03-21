@@ -54,10 +54,22 @@ void Listener::on_accept(boost::system::error_code ec) {
     } else {
         // Create the Session and run it
         auto newClient = std::make_shared<Session>(std::move(socket_));
-        clients.insert(newClient);
+
+        mutex_.lock();
+        sessionQ_.push(newClient);
+        mutex_.unlock();
+
         newClient->run();
     }
 
     // Accept another connection
     do_accept();
+}
+
+std::mutex Listener::getMutex() {
+    return mutex_;
+}
+
+std::queue<std::shared_ptr<Session>> &Listener::getSessionQueue() {
+    return sessionQ_;
 }

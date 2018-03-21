@@ -21,6 +21,7 @@
 #include <bits/unordered_set.h>
 #include <unordered_set>
 #include "Session.h"
+#include "ListenerI.h"
 
 using tcp = boost::asio::ip::tcp;               // from <boost/asio/ip/tcp.hpp>
 namespace websocket = boost::beast::websocket;  // from <boost/beast/websocket.hpp>
@@ -30,13 +31,15 @@ namespace websocket = boost::beast::websocket;  // from <boost/beast/websocket.h
 
 
 // Accepts incoming connections and launches the sessions
-class Listener : public std::enable_shared_from_this<Listener> {
+class Listener : public std::enable_shared_from_this<Listener> , ListenerI{
     tcp::acceptor acceptor_;
     tcp::socket socket_;
+    std::mutex mutex_;
+    std::queue<std::shared_ptr<Session>> sessionQ_;
 
 public:
 
-    std::unordered_set<std::shared_ptr<Session>> clients;
+
 
     Listener(boost::asio::io_context &ioc, tcp::endpoint endpoint);
 
@@ -45,6 +48,11 @@ public:
     void do_accept();
 
     void on_accept(boost::system::error_code ec);
+
+private:
+    std::mutex getMutex() override;
+
+    std::queue<std::shared_ptr<Session>> &getSessionQueue() override;
 };
 
 #endif //CARSMASHCPP_LISTENER_H

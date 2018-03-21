@@ -5,7 +5,10 @@ int main() {
     std::cout << "Test serwera: " << std::endl;
 
     WebSocketServerAsync webSocketServerAsync;
-    webSocketServerAsync.run();
+    std::thread v([&](){webSocketServerAsync.run();});
+
+    v.join();
+
 
     return 0;
 }
