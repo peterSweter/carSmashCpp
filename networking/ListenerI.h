@@ -8,11 +8,13 @@
 
 #include <mutex>
 #include <memory>
+#include <boost/lockfree/queue.hpp>
 #include "Session.h"
+#include "ListenerObserverI.h"
 
 class ListenerI {
-    virtual std::mutex &getMutex() = 0;
-    virtual std::queue<std::shared_ptr<Session>> & getSessionQueue() = 0;
+public:
+    virtual void registerObserver(ListenerObserverI *listenerObserverI) = 0;
 };
 
 

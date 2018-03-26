@@ -3,3 +3,7 @@
 //
 
 #include "Player.h"
+
+void Player::update() {
+    sessionI.getMessages();
+}

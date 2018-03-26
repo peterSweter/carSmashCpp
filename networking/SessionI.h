@@ -8,15 +8,18 @@
 #include <nlohmann/json.hpp>
 #include <queue>
 #include <mutex>
+#include <boost/lockfree/queue.hpp>
+#include "../utils/ThreadSafeQueue.h"
+#include "../utils/ThreadSafeQueueI.h"
 
 using Json = nlohmann::json;
+
 
 class SessionI {
 public:
 
     virtual void sendJSON(Json msg) = 0;
-    virtual std::queue<Json> & getMessages() = 0;
-    virtual std::mutex & getMutex() = 0;
+    virtual ThreadSafeQueue<std::shared_ptr<Json>> * getMessages() = 0;
     virtual bool hasMessages() = 0;
 };
 

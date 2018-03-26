@@ -7,16 +7,17 @@
 
 
 #include "PlayersManager.h"
+#include "networking/WebSocketServerAsync.h"
 
 class Game {
 private:
-    PlayersManager playersManager;
-
+    std::unique_ptr<PlayersManager> playersManager_;
+    std::unique_ptr<WebSocketServerAsync> webSocketServerAsync_;
     void update();
 
 
 public:
-
+    Game();
     void run();
 
 };

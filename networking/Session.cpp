@@ -17,14 +17,12 @@ fail(boost::system::error_code ec, char const *what) {
 
 // Take ownership of the socket
 Session::Session(tcp::socket socket) : ws_(std::move(socket)), strand_(ws_.get_executor()) {
+    std::cout << "Session created" << std::endl;
 }
 
 // Start the asynchronous operation
 void Session::run() {
 
-    json test;
-    test["koles"] = "zbyszek";
-    std::cout << test.dump();
 
     // Accept the websocket handshake
     ws_.async_accept(
@@ -81,9 +79,9 @@ void Session::on_read(boost::system::error_code ec, std::size_t bytes_transferre
 
     ws_.text(ws_.got_text());
 
-    mutexReceived_.lock();
-    receivedMessagesQ_.emplace(strMsgJson);
-    mutexReceived_.unlock();
+
+    receivedMessagesQ_.push(std::make_shared<Json>(strMsgJson));
+
 
     // Clear the buffer
     buffer_.consume(buffer_.size());
@@ -101,14 +99,14 @@ void Session::on_write(boost::system::error_code ec, std::size_t bytes_transferr
 
     outBuffer_.consume(outBuffer_.size());
 
-    mutexToSend_.lock();
+
     if(toSendMessagesQ_.empty()){
 
         isWriting_ = false;
     }else{
         do_write();
     }
-    mutexToSend_.unlock();
+
 
 }
 
@@ -116,10 +114,10 @@ void Session::do_write() {
 
 
 
-    mutexToSend_.lock();
-    std::string message = toSendMessagesQ_.front().dump();
+
+
+    std::string message = toSendMessagesQ_.front()->dump();
     toSendMessagesQ_.pop();
-    mutexToSend_.unlock();
 
     boost::beast::ostream(outBuffer_) << message;
     ws_.async_write(
@@ -136,9 +134,9 @@ void Session::do_write() {
 
 void Session::sendJSON(Json msg) {
 
-    mutexToSend_.lock();
-    toSendMessagesQ_.emplace(msg);
-    mutexToSend_.unlock();
+
+    toSendMessagesQ_.push(std::make_shared<Json>(msg));
+
 
     if(!isWriting_){
         isWriting_ = true;
@@ -147,13 +145,10 @@ void Session::sendJSON(Json msg) {
 
 }
 
-std::queue<Json> &Session::getMessages() {
-    return receivedMessagesQ_;
+ThreadSafeQueue<std::shared_ptr<Json>> * Session::getMessages() {
+    return &receivedMessagesQ_;
 }
 
-std::mutex &Session::getMutex() {
-    return mutexReceived_;
-}
 
 bool Session::hasMessages() {
     return receivedMessagesQ_.empty();

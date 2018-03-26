@@ -23,6 +23,8 @@
 #include <unordered_set>
 #include <mutex>
 #include "SessionI.h"
+#include "../utils/ThreadSafeQueue.h"
+#include <boost/optional.hpp>
 
 
 using tcp = boost::asio::ip::tcp;               // from <boost/asio/ip/tcp.hpp>
@@ -34,15 +36,24 @@ namespace websocket = boost::beast::websocket;  // from <boost/beast/websocket.h
 void fail(boost::system::error_code ec, char const *what);
 
 
-class Session : public std::enable_shared_from_this<Session>, SessionI {
+class Session : public std::enable_shared_from_this<Session>, public SessionI {
     websocket::stream<tcp::socket> ws_;
     boost::asio::strand<boost::asio::io_context::executor_type> strand_;
     boost::beast::multi_buffer buffer_;
     boost::beast::multi_buffer outBuffer_;
-    std::mutex mutexReceived_;
-    std::mutex mutexToSend_;
-    std::queue<Json> receivedMessagesQ_;
-    std::queue<Json> toSendMessagesQ_;
+
+
+    //TODO change to lockfree queues
+
+
+
+
+    //it is staying there
+    ThreadSafeQueue<std::shared_ptr<Json>> toSendMessagesQ_;
+
+
+    //should i push it to the player queue as an observer ?
+    ThreadSafeQueue<std::shared_ptr<Json>> receivedMessagesQ_;
     bool isWriting_;
 
 
@@ -65,9 +76,9 @@ public:
 
     void sendJSON(Json msg) override;
 
-    std::queue<Json> &getMessages() override;
+    ThreadSafeQueue<std::shared_ptr<Json>> * getMessages() override;
 
-    std::mutex &getMutex() override;
+
 
     bool hasMessages() override;
 };

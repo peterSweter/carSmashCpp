@@ -16,7 +16,7 @@ Listener::Listener(boost::asio::io_context &ioc, tcp::endpoint endpoint) : accep
         return;
     }
 
-    // Bind to the server address
+    // Bind to the server address_
     acceptor_.bind(endpoint, ec);
     if (ec) {
         fail(ec, "bind");
@@ -37,6 +37,8 @@ void Listener::run() {
     if (!acceptor_.is_open())
         return;
     do_accept();
+
+    std::cout << "listener is running" << std::endl;
 }
 
 void Listener::do_accept() {
@@ -49,15 +51,16 @@ void Listener::do_accept() {
 }
 
 void Listener::on_accept(boost::system::error_code ec) {
+    std::cout << "[Listener] is accepting new session connection" << std::flush;
     if (ec) {
         fail(ec, "accept");
     } else {
         // Create the Session and run it
-        auto newClient = std::make_shared<Session>(std::move(socket_));
 
-        mutex_.lock();
-        sessionQ_.push(newClient);
-        mutex_.unlock();
+        auto newClient = std::make_shared<Session>(std::move(socket_));
+        std::cout << "Listener created new client" << std::endl;
+        listenerObserverI_->pushNewSession(newClient);
+        std::cout << "Pushed cliten to player manager " << std::endl;
 
         newClient->run();
     }
@@ -66,10 +69,10 @@ void Listener::on_accept(boost::system::error_code ec) {
     do_accept();
 }
 
-std::mutex&  Listener::getMutex() {
-    return mutex_;
+void Listener::registerObserver(ListenerObserverI *listenerObserverI) {
+    std::cout << "[Listener] Observer registered" << std::endl;
+    listenerObserverI_ = listenerObserverI;
 }
 
-std::queue<std::shared_ptr<Session>> &Listener::getSessionQueue() {
-    return sessionQ_;
-}
+
+

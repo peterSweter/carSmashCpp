@@ -11,17 +11,23 @@
 #include "Listener.h"
 
 
-class WebSocketServerAsync {
+class WebSocketServerAsync : ListenerI {
 
-    boost::asio::ip::address address;
-    unsigned short port;
-    int threads;
+    boost::asio::ip::address address_;
+    unsigned short port_;
+    int threads_;
+    std::shared_ptr<Listener> listener_;
+    std::vector<std::thread> threadVec_;
 
 
 public:
 
     WebSocketServerAsync();
     void run();
+    std::shared_ptr<ListenerI> getListener();
+
+
+    void registerObserver(ListenerObserverI *listenerObserverI) override;
 
 };
 

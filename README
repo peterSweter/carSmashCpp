@@ -5,6 +5,7 @@ Realtime multiplayer game for licentiate.
 
 - box2D rigid body physics engine
 - boost.beast for for web sockets handling
+- nlohman/joson for JSON handling
 - client will be written in js, there is also  planned android version
 
 # website #
@@ -12,3 +13,4 @@ Realtime multiplayer game for licentiate.
 carsmash.io
 
 # to do: #
+

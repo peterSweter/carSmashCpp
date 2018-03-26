@@ -10,6 +10,7 @@
 #include <boost/asio/bind_executor.hpp>
 #include <boost/asio/strand.hpp>
 #include <boost/asio/ip/tcp.hpp>
+#include <boost/lockfree/queue.hpp>
 #include <algorithm>
 #include <cstdlib>
 #include <functional>
@@ -31,28 +32,29 @@ namespace websocket = boost::beast::websocket;  // from <boost/beast/websocket.h
 
 
 // Accepts incoming connections and launches the sessions
-class Listener : public std::enable_shared_from_this<Listener> , ListenerI{
+class Listener : public std::enable_shared_from_this<Listener>, public ListenerI {
+
     tcp::acceptor acceptor_;
     tcp::socket socket_;
     std::mutex mutex_;
-    std::queue<std::shared_ptr<Session>> sessionQ_;
+    ListenerObserverI * listenerObserverI_;
+
 
 public:
-
 
 
     Listener(boost::asio::io_context &ioc, tcp::endpoint endpoint);
 
     // Start accepting incoming connections
     void run();
+
     void do_accept();
 
     void on_accept(boost::system::error_code ec);
 
-private:
-    std::mutex& getMutex() override;
+    void registerObserver(ListenerObserverI *listenerObserverI) override;
 
-    std::queue<std::shared_ptr<Session>> &getSessionQueue() override;
+
 };
 
 #endif //CARSMASHCPP_LISTENER_H

@@ -154,7 +154,7 @@ public:
             return;
         }
 
-        // Bind to the server address
+        // Bind to the server address_
         acceptor_.bind(endpoint, ec);
         if (ec) {
             fail(ec, "bind");
@@ -210,25 +210,25 @@ int main(int argc, char *argv[]) {
     // Check command line arguments.
     if (argc != 4) {
         std::cerr <<
-                  "Usage: websocket-server-async <address> <port> <threads>\n" <<
+                  "Usage: websocket-server-async <address_> <port_> <threads_>\n" <<
                   "Example:\n" <<
                   "    websocket-server-async 0.0.0.0 8080 1\n";
         return EXIT_FAILURE;
     }
-    auto const address = boost::asio::ip::make_address(argv[1]);
-    auto const port = static_cast<unsigned short>(std::atoi(argv[2]));
-    auto const threads = std::max<int>(1, std::atoi(argv[3]));
+    auto const address_ = boost::asio::ip::make_address(argv[1]);
+    auto const port_ = static_cast<unsigned short>(std::atoi(argv[2]));
+    auto const threads_ = std::max<int>(1, std::atoi(argv[3]));
 
     // The io_context is required for all I/O
-    boost::asio::io_context ioc{threads};
+    boost::asio::io_context ioc{threads_};
 
-    // Create and launch a listening port
-    std::make_shared<Listener>(ioc, tcp::endpoint{address, port})->run();
+    // Create and launch a listening port_
+    std::make_shared<Listener>(ioc, tcp::endpoint{address_, port_})->run();
 
-    // Run the I/O service on the requested number of threads
+    // Run the I/O service on the requested number of threads_
     std::vector<std::thread> v;
-    v.reserve(threads - 1);
-    for (auto i = threads - 1; i > 0; --i)
+    v.reserve(threads_ - 1);
+    for (auto i = threads_ - 1; i > 0; --i)
         v.emplace_back(
                 [&ioc] {
                     ioc.run();

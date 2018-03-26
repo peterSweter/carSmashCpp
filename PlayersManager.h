@@ -7,14 +7,27 @@
 
 
 #include "networking/ListenerI.h"
+#include "utils/ThreadSafeQueue.h"
+#include "utils/ThreadSafeQueueI.h"
 
-class PlayersManager {
+
+//TODO choose container for storing Players - > suggested double linked list
+//TODO consider creating gameObj class interface with update method
+
+class PlayersManager : public ListenerObserverI {
 private:
-    ListenerI & listener;
+
 public:
 
-    PlayersManager();
+    ThreadSafeQueue<std::shared_ptr<SessionI>> receivedSessionQ_;
+
+    PlayersManager() = default;
     void update();
+    void pushNewSession(std::shared_ptr<SessionI> sessionI) override;
+
+private:
+
+    void createNewPlayer(std::shared_ptr<SessionI> sessionI);
 };
 
 
