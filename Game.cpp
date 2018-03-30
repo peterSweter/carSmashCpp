@@ -5,6 +5,9 @@
 #include <zconf.h>
 #include "Game.h"
 
+std::stringstream Game::threadOut;
+std::mutex Game::mutex_;
+
 void Game::run() {
 
     //TODO create simple communication with js client
@@ -15,7 +18,10 @@ void Game::run() {
         //this is temporary game loop
         playersManager_->update();
         sleep(1);
-        std::cout << " Inside update loop" << std::endl;
+        std::cout << Game::threadOut.str();
+        Game::threadOut.str("");
+
+
     }
 }
 
@@ -29,8 +35,8 @@ Game::Game() {
     webSocketServerAsync_ = std::make_unique<WebSocketServerAsync>();
     playersManager_ = std::make_unique<PlayersManager>();
 
-    webSocketServerAsync_->run();
     webSocketServerAsync_->registerObserver(playersManager_.get());
+    webSocketServerAsync_->run();
 
     this->run();
 }

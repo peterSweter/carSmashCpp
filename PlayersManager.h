@@ -9,6 +9,9 @@
 #include "networking/ListenerI.h"
 #include "utils/ThreadSafeQueue.h"
 #include "utils/ThreadSafeQueueI.h"
+#include "Player.h"
+#include <list>
+
 
 
 //TODO choose container for storing Players - > suggested double linked list
@@ -16,6 +19,8 @@
 
 class PlayersManager : public ListenerObserverI {
 private:
+
+    std::list<std::shared_ptr<Player>> playersList_;
 
 public:
 

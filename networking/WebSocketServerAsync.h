@@ -18,6 +18,7 @@ class WebSocketServerAsync : ListenerI {
     int threads_;
     std::shared_ptr<Listener> listener_;
     std::vector<std::thread> threadVec_;
+    boost::asio::io_context ioc_;
 
 
 public:

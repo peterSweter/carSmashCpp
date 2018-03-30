@@ -12,9 +12,9 @@
 
 class Player {
 private:
-    SessionI &sessionI;
+    std::shared_ptr<SessionI> sessionI_;
 public:
-    Player();
+    Player(std::shared_ptr<SessionI>  && sessionI );
     void update();
 
 };

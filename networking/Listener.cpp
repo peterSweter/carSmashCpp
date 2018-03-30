@@ -3,6 +3,7 @@
 //
 
 #include "Listener.h"
+#include "../Game.h"
 
 
 Listener::Listener(boost::asio::io_context &ioc, tcp::endpoint endpoint) : acceptor_(ioc), socket_(ioc) {
@@ -51,22 +52,21 @@ void Listener::do_accept() {
 }
 
 void Listener::on_accept(boost::system::error_code ec) {
-    std::cout << "[Listener] is accepting new session connection" << std::flush;
     if (ec) {
         fail(ec, "accept");
     } else {
         // Create the Session and run it
 
         auto newClient = std::make_shared<Session>(std::move(socket_));
-        std::cout << "Listener created new client" << std::endl;
+        assert(listenerObserverI_ != nullptr);
         listenerObserverI_->pushNewSession(newClient);
-        std::cout << "Pushed cliten to player manager " << std::endl;
 
         newClient->run();
     }
 
     // Accept another connection
     do_accept();
+
 }
 
 void Listener::registerObserver(ListenerObserverI *listenerObserverI) {

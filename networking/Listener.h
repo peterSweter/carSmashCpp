@@ -37,7 +37,7 @@ class Listener : public std::enable_shared_from_this<Listener>, public ListenerI
     tcp::acceptor acceptor_;
     tcp::socket socket_;
     std::mutex mutex_;
-    ListenerObserverI * listenerObserverI_;
+    ListenerObserverI * listenerObserverI_ = nullptr;
 
 
 public:

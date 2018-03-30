@@ -17,6 +17,8 @@ private:
 
 
 public:
+    static std::stringstream threadOut;
+    static std::mutex mutex_;
     Game();
     void run();
 
