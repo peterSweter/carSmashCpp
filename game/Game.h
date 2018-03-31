@@ -19,6 +19,7 @@ private:
 public:
     static std::stringstream threadOut;
     static std::mutex mutex_;
+    static double MS_PER_FRAME;
     Game();
     void run();
 
