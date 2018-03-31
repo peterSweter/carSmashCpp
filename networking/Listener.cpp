@@ -3,7 +3,7 @@
 //
 
 #include "Listener.h"
-#include "../Game.h"
+#include "../game/Game.h"
 
 
 Listener::Listener(boost::asio::io_context &ioc, tcp::endpoint endpoint) : acceptor_(ioc), socket_(ioc) {

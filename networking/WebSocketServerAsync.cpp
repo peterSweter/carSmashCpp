@@ -5,7 +5,7 @@
 #include <memory>
 #include "WebSocketServerAsync.h"
 
-WebSocketServerAsync::WebSocketServerAsync() : threads_(1), ioc_{threads_} {
+WebSocketServerAsync::WebSocketServerAsync() : threads_(4), ioc_{threads_} {
     this->address_ = boost::asio::ip::make_address("0.0.0.0");
     this->port_ = static_cast<unsigned short>(8080);
     listener_ = std::make_shared<Listener>(ioc_, tcp::endpoint{address_, port_});

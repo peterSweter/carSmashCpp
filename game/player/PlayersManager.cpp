@@ -3,7 +3,7 @@
 //
 
 #include "PlayersManager.h"
-#include "Game.h"
+#include "../Game.h"
 
 void PlayersManager::update() {
 

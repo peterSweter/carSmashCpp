@@ -17,7 +17,6 @@ void Game::run() {
     while (true) {
         //this is temporary game loop
         playersManager_->update();
-        sleep(1);
         std::cout << Game::threadOut.str();
         Game::threadOut.str("");
 

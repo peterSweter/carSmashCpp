@@ -6,9 +6,9 @@
 #define CARSMASHCPP_PLAYERSMANAGER_H
 
 
-#include "networking/ListenerI.h"
-#include "utils/ThreadSafeQueue.h"
-#include "utils/ThreadSafeQueueI.h"
+#include "../../networking/ListenerI.h"
+#include "../../utils/ThreadSafeQueue.h"
+#include "../../utils/ThreadSafeQueueI.h"
 #include "Player.h"
 #include <list>
 

@@ -6,8 +6,8 @@
 #define CARSMASHCPP_GAME_H
 
 
-#include "PlayersManager.h"
-#include "networking/WebSocketServerAsync.h"
+#include "player/PlayersManager.h"
+#include "../networking/WebSocketServerAsync.h"
 
 class Game {
 private:

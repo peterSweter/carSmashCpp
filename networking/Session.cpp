@@ -80,7 +80,7 @@ void Session::on_read(boost::system::error_code ec, std::size_t bytes_transferre
     ws_.text(ws_.got_text());
 
 
-    receivedMessagesQ_.push(std::make_shared<Json>(strMsgJson));
+    receivedMessagesQ_.push(std::make_shared<Json>(Json::parse(strMsgJson)));
 
 
     // Clear the buffer
