@@ -22,6 +22,7 @@ Player::Player(std::shared_ptr<SessionI> &&sessionI) : sessionI_(std::move(sessi
 void Player::handleMessage(std::shared_ptr<Json> message) {
 
     //TODO catch exceptions while parsing json data package
+    //Game::threadOut << "Player got message from client" << std::endl;
 
     auto messageTypeIt = message->find("t");
     if (messageTypeIt == message->end()) {

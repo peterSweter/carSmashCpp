@@ -7,7 +7,8 @@
 
 
 class EntityI {
-
+public:
+    virtual void update() = 0;
 };
 
 

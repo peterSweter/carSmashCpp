@@ -3,6 +3,7 @@
 //
 
 #include "Session.h"
+#include "../game/Game.h"
 #include <nlohmann/json.hpp>
 
 using json = nlohmann::json;
@@ -62,12 +63,13 @@ void Session::on_read(boost::system::error_code ec, std::size_t bytes_transferre
     boost::ignore_unused(bytes_transferred);
 
     // This indicates that the Session was closed
-    if (ec == websocket::error::closed)
+    if (ec == websocket::error::closed || ec == boost::asio::error::eof)
         return;
 
-    if (ec)
+    if (ec) {
         fail(ec, "read");
 
+    }
     // Echo the message // super usefull
     //std::cout << boost::beast::buffers(buffer_.data()) << "\n";
     //  boost::beast::ostream(buffer_) << "dodatkowy msg\n";
@@ -80,8 +82,12 @@ void Session::on_read(boost::system::error_code ec, std::size_t bytes_transferre
     ws_.text(ws_.got_text());
 
 
-    receivedMessagesQ_.push(std::make_shared<Json>(Json::parse(strMsgJson)));
 
+    try {
+        receivedMessagesQ_.push(std::make_shared<Json>(Json::parse(strMsgJson)));
+    }catch (...){
+        Game::threadOut << "[Session] error while parsing input data to json.";
+    }
 
     // Clear the buffer
     buffer_.consume(buffer_.size());
