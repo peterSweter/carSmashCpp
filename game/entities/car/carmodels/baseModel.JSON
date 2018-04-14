@@ -1,0 +1,32 @@
+{
+  "name" : "baseModel",
+  "bodies" :[
+    {
+      "type" : "b2_dynamicBody",
+      "bodyID" : "chassis",
+      "fixtures" :[
+
+        {
+          "carPartID" : "chassis",
+          "durability" : 0.1,
+          "shape" : "box",
+          "density" : 1,
+          "restitution" : 1,
+          "friction" : 1,
+          "width" : 1,
+          "height" : 1,
+          "color" : "red"
+        }
+      ]
+
+    }
+  ],
+
+  "joints" : [
+
+  ],
+
+  "maxHealth" : 120
+
+
+}

@@ -5,7 +5,11 @@
 #include "Box2dManager.h"
 
 Box2dManager::Box2dManager() {
-    b2Vec2 gravity(0,0);
+    b2Vec2 gravity(0.0,0.0);
     bool doSleep = true;
-    this->gameWorld_ = std::make_shared<b2World>(gravity, doSleep);
+    this->gameWorld_ = std::make_shared<b2World>(gravity);
+}
+
+void Box2dManager::worldStep() {
+    gameWorld_->Step(timeStep_, velocityIterations_, positionIterations_);
 }

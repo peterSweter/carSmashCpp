@@ -9,6 +9,11 @@
 #include "../../networking/SessionI.h"
 
 class GameSession {
+private:
+
+    //shared_ptr<Car> car_;  CarFactoryGetModel
+    //init data string for car model
+
     int x = 0,y =0;
 public:
     void handleInput(std::shared_ptr<Json> msg);

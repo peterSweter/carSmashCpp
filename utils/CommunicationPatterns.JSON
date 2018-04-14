@@ -1,0 +1,38 @@
+{
+  //Player->GameSeesion
+
+  "New game Object": {
+    "t": "newGame",
+    "nick": "playerNick",
+    "carModelID": 1
+  },
+
+  //Car Protorypes used in car factory
+  "Car prototype" : {
+    "name" : "modelID",
+    "bodies" :[
+      //body
+      {
+        "type" : "b2_dynamicBody",
+        "fixtures" :[
+          //fixture
+          {
+            "shape" : "polygon / circle / box",
+            "density" : 12,
+            "restitution" : 12,
+            "friction" : 12,
+            "carPartID" : "chasis",
+            "vertices" : [
+              {"x" : 12, "y" : 13},
+              {"x" : 12, "y" : 13},
+              {"x" : 12, "y" : 13},
+              {"x" : 12, "y" : 13}
+
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
+

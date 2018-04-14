@@ -8,11 +8,14 @@
 
 #include "player/PlayersManager.h"
 #include "../networking/WebSocketServerAsync.h"
+#include "box2D/Box2dManager.h"
 
 class Game {
 private:
     std::unique_ptr<PlayersManager> playersManager_;
     std::unique_ptr<WebSocketServerAsync> webSocketServerAsync_;
+    std::unique_ptr<Box2dManager> box2dManager_;
+
     void update();
 
 

@@ -15,11 +15,14 @@ private:
 
     std::shared_ptr<SessionI> sessionI_;
     std::shared_ptr<GameSession> gameSessionI_;
+    std::string collectDataToSend();
 
 public:
     Player(std::shared_ptr<SessionI>  && sessionI );
     void update();
     void handleMessage(std::shared_ptr<Json> message);
+    void sendData();
+
 
 };
 

@@ -20,8 +20,14 @@ void Game::run() {
 
     while (true) {
         auto start = std::chrono::system_clock::now();
+        //b2dWordl.step
+
         //this is temporary game loop
         playersManager_->update();
+
+        //send data
+
+
         std::cout << Game::threadOut.str();
         Game::threadOut.str("");
 
@@ -41,11 +47,14 @@ void Game::update() {
 Game::Game() {
 
 
+    box2dManager_ =  std::make_unique<Box2dManager>();
+
     webSocketServerAsync_ = std::make_unique<WebSocketServerAsync>();
     playersManager_ = std::make_unique<PlayersManager>();
 
     webSocketServerAsync_->registerObserver(playersManager_.get());
     webSocketServerAsync_->run();
+
 
     this->run();
 }
