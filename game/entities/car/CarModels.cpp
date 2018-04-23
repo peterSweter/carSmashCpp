@@ -25,6 +25,9 @@ void CarModels::loadModels() {
         Json json;
         modelFile >> json;
 
+        models_.emplace(modelName, CarPrototype(json));
+
+
     }
 
 }

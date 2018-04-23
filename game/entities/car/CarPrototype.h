@@ -9,13 +9,18 @@
 #include <map>
 #include <Box2D/Box2D.h>
 #include "CarPartPrototype.h"
+#include "CarBodyPrototype.h"
+#include "../../box2D/JointPrototype.h"
 #include <nlohmann/json.hpp>
+#include <set>
 
 using Json = nlohmann::json;
 
 class CarPrototype {
+    std::string name_;
 public:
-    std::map<std::string, CarPartPrototype> carPartsPrototypes_;
+    std::map<std::string, CarBodyPrototype> carPartsPrototypes_;
+    std::set<JointPrototype> joints_;
 
     CarPrototype(Json & json);
     void parseJson(Json & json);

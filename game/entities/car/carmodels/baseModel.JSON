@@ -23,7 +23,15 @@
   ],
 
   "joints" : [
+    {
+      "bodyAID" : "tire1",
+      "bodyBID" : "chassis",
+      "localAnchorAx" : 0,
+      "localAnchorAy" : 0,
+      "localAnchorBx" : 0,
+      "localAnchorBy" : 0
 
+    }
   ],
 
   "maxHealth" : 120

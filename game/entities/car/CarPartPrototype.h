@@ -13,13 +13,20 @@
 using Json = nlohmann::json;
 
 class CarPartPrototype {
+private:
+    b2PolygonShape polygonShape_;
+    b2CircleShape circleShape_;
+
 public:
     std::string carPartID_;
+    std::string color_;
     double durability_ = 0.0;
-    std::vector<b2FixtureDef> fixtureDefinitions_;
+    b2FixtureDef fixtureDef_;
 
     CarPartPrototype(Json & json);
     void parseJson(Json & json);
+
+    b2FixtureDef* getFixtureDef();
 
 };
 

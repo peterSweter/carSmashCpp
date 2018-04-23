@@ -9,7 +9,9 @@ CarPrototype::CarPrototype(Json &json) {
 }
 
 void CarPrototype::parseJson(Json &json) {
+
+    name_ = json["name"].get<std::string>();
     for(Json & bodyJson : json["bodies"]){
-        this->carPartsPrototypes_.emplace(bodyJson["carPartID"].get<std::string>(), CarPartPrototype(bodyJson));
+        carPartsPrototypes_.insert(std::make_pair(bodyJson["carPartID"].get<std::string>(), CarBodyPrototype(bodyJson)));
     }
 }
