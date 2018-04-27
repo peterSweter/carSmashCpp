@@ -32,7 +32,7 @@ void PlayersManager::pushNewSession(std::shared_ptr<SessionI> sessionI) {
 }
 
 void PlayersManager::createNewPlayer(std::shared_ptr<SessionI> sessionI) {
-    playersList_.push_back(std::make_shared<Player>(std::move(sessionI)));
+    playersList_.push_back(std::make_shared<Player>(std::move(sessionI), &carFactory_));
 
 }
 

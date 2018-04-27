@@ -13,15 +13,21 @@ void Player::update() {
         handleMessage(tmpMessage);
 
     }
+
+    if(gameSessionI_){
+        gameSessionI_->update();
+    }
 }
 
-Player::Player(std::shared_ptr<SessionI> &&sessionI) : sessionI_(std::move(sessionI)) {
+Player::Player(std::shared_ptr<SessionI> &&sessionI,  CarFactory *carFactory) : sessionI_(std::move(sessionI)), carFactory_(carFactory) {
     Game::threadOut << "Created new player " << std::endl;
 }
 
 void Player::handleMessage(std::shared_ptr<Json> message) {
 
     //TODO catch exceptions while parsing json data package
+    //TODO checking if player is in appropriate state to sent ceratin type of message
+
     //Game::threadOut << "Player got message from client" << std::endl;
 
     auto messageTypeIt = message->find("t");
@@ -34,12 +40,20 @@ void Player::handleMessage(std::shared_ptr<Json> message) {
     switch (messageType) {
         case 'n': {
             //new player event, player nick
-            Game::threadOut << *message->find("v") << std::endl;
+           /* Game::threadOut << *message->find("v") << std::endl;
             std::map<std::string, std::string> msgRetMap = {{"t", "u"},
                                                             {"x", "12"},
                                                             {"y", "12"}};
-            sessionI_->sendJSON(Json(msgRetMap));
-            gameSessionI_ = std::make_shared<GameSession>();
+            sessionI_->sendJSON(Json(msgRetMap));*/
+
+           std::string carModelID = message->at("carModelID").get<std::string>();
+           std::string nickname = message->at("nickname").get<std::string>();
+
+           auto carPtr = carFactory_->create(carModelID);
+
+           Game::threadOut << "created new car" << std::endl;
+
+            gameSessionI_ = std::make_shared<GameSession>(carPtr, nickname);
 
             break;
         }
@@ -56,3 +70,4 @@ void Player::handleMessage(std::shared_ptr<Json> message) {
             break;
     }
 }
+

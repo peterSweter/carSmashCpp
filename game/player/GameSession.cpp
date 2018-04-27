@@ -30,3 +30,7 @@ void GameSession::handleInput(std::shared_ptr<Json> msg) {
 std::map<std::string, std::string> GameSession::getData() {
     return {{"t","u"},{"x", std::to_string(this->x)},{"y",std::to_string(this->y)}};
 }
+
+GameSession::GameSession(std::shared_ptr<Car> car, std::string nickname) : car_(std::move(car)), nickname_(nickname){
+
+}

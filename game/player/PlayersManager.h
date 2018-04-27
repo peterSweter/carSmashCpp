@@ -27,7 +27,7 @@ public:
 
     ThreadSafeQueue<std::shared_ptr<SessionI>> receivedSessionQ_;
     Box2dManager * box2dManager_;
-    CarFactory carFactory_;
+    CarFactory  carFactory_;
 
     PlayersManager(Box2dManager * box2dManager);
 
