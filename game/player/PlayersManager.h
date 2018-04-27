@@ -10,6 +10,7 @@
 #include "../../utils/ThreadSafeQueue.h"
 #include "../../utils/ThreadSafeQueueI.h"
 #include "Player.h"
+#include "../entities/car/CarFactory.h"
 #include <list>
 
 
@@ -25,8 +26,11 @@ private:
 public:
 
     ThreadSafeQueue<std::shared_ptr<SessionI>> receivedSessionQ_;
+    Box2dManager * box2dManager_;
+    CarFactory carFactory_;
 
-    PlayersManager() = default;
+    PlayersManager(Box2dManager * box2dManager);
+
     void update();
     void pushNewSession(std::shared_ptr<SessionI> sessionI) override;
 

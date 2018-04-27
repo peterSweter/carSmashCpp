@@ -19,6 +19,8 @@ private:
 public:
     Box2dManager();
     void worldStep();
+    b2Body * createBody(b2BodyDef * bodyDef);
+    b2Fixture * createFixture(b2FixtureDef * fixtureDef);
 };
 
 

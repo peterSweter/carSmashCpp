@@ -5,6 +5,8 @@
 #include "PlayersManager.h"
 #include "../Game.h"
 
+
+
 void PlayersManager::update() {
 
     //TODO  check if server/I has/have  new session
@@ -31,5 +33,9 @@ void PlayersManager::pushNewSession(std::shared_ptr<SessionI> sessionI) {
 
 void PlayersManager::createNewPlayer(std::shared_ptr<SessionI> sessionI) {
     playersList_.push_back(std::make_shared<Player>(std::move(sessionI)));
+
+}
+
+PlayersManager::PlayersManager(Box2dManager *box2dManager) : carFactory_(box2dManager), box2dManager_(box2dManager) {
 
 }

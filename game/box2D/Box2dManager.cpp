@@ -13,3 +13,7 @@ Box2dManager::Box2dManager() {
 void Box2dManager::worldStep() {
     gameWorld_->Step(timeStep_, velocityIterations_, positionIterations_);
 }
+
+b2Body *Box2dManager::createBody(b2BodyDef * bodyDef) {
+    return gameWorld_->CreateBody(bodyDef);
+}

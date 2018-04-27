@@ -8,15 +8,20 @@
 
 #include "../../box2D/Box2dManager.h"
 #include "Car.h"
+#include "CarModels.h"
 
 class CarFactory {
 private:
 
     Box2dManager * box2dManager_;
+    CarModels carModels_;
 public:
 
     CarFactory(Box2dManager * box2dManager);
     std::shared_ptr<Car>create(std::string carModelID);
+
+
+
 
 };
 

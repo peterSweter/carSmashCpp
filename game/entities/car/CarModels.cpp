@@ -25,9 +25,13 @@ void CarModels::loadModels() {
         Json json;
         modelFile >> json;
 
-        models_.emplace(modelName, CarPrototype(json));
+        models_.emplace(modelName, std::make_shared<CarPrototype>(json));
 
 
     }
 
+}
+
+std::shared_ptr<CarPrototype> CarModels::getModel(std::string modelID) {
+    return models_.find(modelID)->second;
 }

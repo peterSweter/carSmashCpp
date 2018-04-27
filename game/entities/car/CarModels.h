@@ -25,6 +25,7 @@ public:
 
     void loadModels();
 
+    std::shared_ptr<CarPrototype> getModel(std::string);
 
 
 };
