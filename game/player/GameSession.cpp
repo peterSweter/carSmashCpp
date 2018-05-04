@@ -28,9 +28,24 @@ void GameSession::handleInput(std::shared_ptr<Json> msg) {
 }
 
 std::map<std::string, std::string> GameSession::getData() {
-    return {{"t","u"},{"x", std::to_string(this->x)},{"y",std::to_string(this->y)}};
+
+
+    return {{"t", "u"},
+            {"x", std::to_string(this->x)},
+            {"y", std::to_string(this->y)}};
+}
+
+void GameSession::update() {
+
+    // TODO AABB world query separate class for querying world
+    // TODO sendign update frame specification
+    // TODO push game session logic there ?
 }
 
 GameSession::GameSession(std::shared_ptr<Car> car, std::string nickname) : car_(std::move(car)), nickname_(nickname){
 
+}
+
+const std::shared_ptr<Car> &GameSession::getCar() const {
+    return car_;
 }

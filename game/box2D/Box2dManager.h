@@ -21,6 +21,7 @@ public:
     void worldStep();
     b2Body * createBody(b2BodyDef * bodyDef);
     b2Fixture * createFixture(b2FixtureDef * fixtureDef);
+    void queryWorld(b2QueryCallback * queryCallback, b2AABB);
 };
 
 

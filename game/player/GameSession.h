@@ -9,6 +9,7 @@
 #include "../../networking/SessionI.h"
 #include "../entities/car/Car.h"
 
+
 class GameSession {
 private:
 
@@ -22,7 +23,13 @@ public:
     GameSession(std::shared_ptr<Car> car, std::string nickname);
     void handleInput(std::shared_ptr<Json> msg);
     std::map<std::string, std::string> getData();
+
+    //TODO RayCast Data
+    //TODO problem with conversion units and scale
+
     void update();
+
+    const std::shared_ptr<Car> &getCar() const;
 };
 
 

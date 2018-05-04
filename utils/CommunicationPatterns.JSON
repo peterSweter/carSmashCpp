@@ -6,28 +6,69 @@
     "nick": "playerNick",
     "carModelID": 1
   },
-
   //Car Protorypes used in car factory
-  "Car prototype" : {
-    "name" : "modelID",
-    "bodies" :[
+  "Car prototype": {
+    "name": "modelID",
+    "bodies": [
       //body
       {
-        "type" : "b2_dynamicBody",
-        "fixtures" :[
+        "type": "b2_dynamicBody",
+        "fixtures": [
           //fixture
           {
-            "shape" : "polygon / circle / box",
-            "density" : 12,
-            "restitution" : 12,
-            "friction" : 12,
-            "carPartID" : "chasis",
-            "vertices" : [
-              {"x" : 12, "y" : 13},
-              {"x" : 12, "y" : 13},
-              {"x" : 12, "y" : 13},
-              {"x" : 12, "y" : 13}
+            "shape": "polygon / circle / box",
+            "density": 12,
+            "restitution": 12,
+            "friction": 12,
+            "carPartID": "chasis",
+            "vertices": [
+              {
+                "x": 12,
+                "y": 13
+              },
+              {
+                "x": 12,
+                "y": 13
+              },
+              {
+                "x": 12,
+                "y": 13
+              },
+              {
+                "x": 12,
+                "y": 13
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  //TODO sending data frame update specification  (0)
+  //contract : all objects are rectangles or circles for now
+  //first game object is player car wololo
 
+  "player update data frame ": {
+    "gameObjects": [
+      //TODO create object with bodies and fixtures
+      {
+        "t": "car",
+        "nick": "halinka",
+        "bodies": [
+          {
+            "x": 1,
+            "y": 1,
+            "angle": 1,
+            "fixtures": [
+              {
+                "shape": "polygon / circle / box",
+                "color": "red",
+                "x": 12,
+                "y": 12,
+                "angle": 12,
+                "width": 12,
+                "height": 12
+              }
             ]
           }
         ]

@@ -17,3 +17,7 @@ void Box2dManager::worldStep() {
 b2Body *Box2dManager::createBody(b2BodyDef * bodyDef) {
     return gameWorld_->CreateBody(bodyDef);
 }
+
+void Box2dManager::queryWorld(b2QueryCallback *queryCallback, b2AABB aabb) {
+    this->gameWorld_->QueryAABB(queryCallback, aabb);
+}

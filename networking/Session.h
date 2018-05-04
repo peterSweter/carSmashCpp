@@ -52,6 +52,9 @@ class Session : public std::enable_shared_from_this<Session>, public SessionI {
     ThreadSafeQueue<std::shared_ptr<Json>> toSendMessagesQ_;
 
 
+private:
+
+
     //should i push it to the player queue as an observer ?
     ThreadSafeQueue<std::shared_ptr<Json>> receivedMessagesQ_;
     bool isWriting_;

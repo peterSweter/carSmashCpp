@@ -16,6 +16,9 @@ class CarPartPrototype {
 private:
     b2PolygonShape polygonShape_;
     b2CircleShape circleShape_;
+    std::string jsonDisplayData_;
+public:
+    const std::string * getJsonDisplayData() const;
 
 public:
     std::string carPartID_;

@@ -10,6 +10,7 @@
 #include "Car.h"
 #include "CarModels.h"
 
+class Car;
 class CarFactory {
 private:
 

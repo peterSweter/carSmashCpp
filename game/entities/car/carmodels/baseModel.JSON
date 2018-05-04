@@ -15,7 +15,9 @@
           "friction" : 1,
           "width" : 1,
           "height" : 1,
-          "color" : "red"
+          "color" : "red",
+          "x": 1,
+          "y": 1
         }
       ]
 
