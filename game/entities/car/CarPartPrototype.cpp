@@ -10,12 +10,14 @@ CarPartPrototype::CarPartPrototype(Json &json) {
 
 void CarPartPrototype::parseJson(Json &json) {
 
+    //TODO importand debug creating json to send, maybe swith to nolhamn json due to more readable code and then generate static to_str from that ?
+
     jsonDisplayData_ = "{";
 
-    this->carPartID_ = json["bodyID"].get<std::string>();
-    this->durability_ =  json["durability"].get<double>();
+    this->carPartID_ = json["carPartID"].get<std::string>();
+    this->durability_ = json["durability"].get<double>();
 
-    float restitution, friction, density,x,y;
+    float restitution, friction, density, x, y;
 
     restitution = json["restitution"].get<float>();
     friction = json["friction"].get<float>();
@@ -26,7 +28,7 @@ void CarPartPrototype::parseJson(Json &json) {
 
     jsonDisplayData_ += " \"shape\" : " + shapeType + "\" ";
 
-    if(shapeType == "box"){
+    if (shapeType == "box") {
 
 
         float width, height;
@@ -61,6 +63,6 @@ b2FixtureDef *CarPartPrototype::getFixtureDef() {
     return &fixtureDef_;
 }
 
-const std::string * CarPartPrototype::getJsonDisplayData() const {
+const std::string *CarPartPrototype::getJsonDisplayData() const {
     return &jsonDisplayData_;
 }

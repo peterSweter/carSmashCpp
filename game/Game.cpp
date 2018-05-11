@@ -48,9 +48,12 @@ Game::Game() {
 
 
     box2dManager_ =  std::make_unique<Box2dManager>();
+    std::cout << "Box 2d Manager created" << std::endl;
 
     webSocketServerAsync_ = std::make_unique<WebSocketServerAsync>();
+    std::cout << "server Created" << std::endl;
     playersManager_ = std::make_unique<PlayersManager>(box2dManager_.get());
+    std::cout << "players Manager created" << std::endl;
 
     webSocketServerAsync_->registerObserver(playersManager_.get());
     webSocketServerAsync_->run();

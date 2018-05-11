@@ -37,5 +37,5 @@ void PlayersManager::createNewPlayer(std::shared_ptr<SessionI> sessionI) {
 }
 
 PlayersManager::PlayersManager(Box2dManager *box2dManager) : carFactory_(box2dManager), box2dManager_(box2dManager) {
-
+    std::cout << "Players Manager Constructor." << std::endl;
 }

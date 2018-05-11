@@ -1,42 +1,35 @@
 {
-  "name" : "baseModel",
-  "bodies" :[
+  "name": "baseModel",
+  "bodies": [
     {
-      "type" : "b2_dynamicBody",
-      "bodyID" : "chassis",
-      "fixtures" :[
-
+      "type": "b2_dynamicBody",
+      "bodyID": "chassis",
+      "fixtures": [
         {
-          "carPartID" : "chassis",
-          "durability" : 0.1,
-          "shape" : "box",
-          "density" : 1,
-          "restitution" : 1,
-          "friction" : 1,
-          "width" : 1,
-          "height" : 1,
-          "color" : "red",
+          "carPartID": "chassis",
+          "durability": 0.1,
+          "shape": "box",
+          "density": 1,
+          "restitution": 1,
+          "friction": 1,
+          "width": 1,
+          "height": 1,
+          "color": "red",
           "x": 1,
           "y": 1
         }
       ]
-
     }
   ],
-
-  "joints" : [
+  "joints": [
     {
-      "bodyAID" : "tire1",
-      "bodyBID" : "chassis",
-      "localAnchorAx" : 0,
-      "localAnchorAy" : 0,
-      "localAnchorBx" : 0,
-      "localAnchorBy" : 0
-
+      "bodyAID": "tire1",
+      "bodyBID": "chassis",
+      "localAnchorAx": 0,
+      "localAnchorAy": 0,
+      "localAnchorBx": 0,
+      "localAnchorBy": 0
     }
   ],
-
-  "maxHealth" : 120
-
-
+  "maxHealth": 120
 }

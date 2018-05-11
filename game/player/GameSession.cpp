@@ -28,7 +28,7 @@ void GameSession::handleInput(std::shared_ptr<Json> msg) {
 }
 
 std::map<std::string, std::string> GameSession::getData() {
-
+    //TODO data should be sent from there not from invoking data from player from this class.
 
     return {{"t", "u"},
             {"x", std::to_string(this->x)},
@@ -37,7 +37,7 @@ std::map<std::string, std::string> GameSession::getData() {
 
 void GameSession::update() {
 
-    // TODO AABB world query separate class for querying world
+
     // TODO sendign update frame specification
     // TODO push game session logic there ?
 }
