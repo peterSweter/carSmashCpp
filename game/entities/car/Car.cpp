@@ -3,6 +3,7 @@
 //
 
 #include "Car.h"
+#include "../../Game.h"
 
 Car::Car(std::shared_ptr<CarPrototype> carPrototype, Box2dManager * box2dManager) : box2dManager_(box2dManager) {
 
@@ -69,9 +70,8 @@ std::string Car::getJsonData() {
     return jsonDisplaydata;
 }
 
-void Car::setPLayer(PlayerI *player) {
+void Car::setPlayer(PlayerI *player) {
     this->player_ = player;
-
 
 }
 
@@ -79,4 +79,30 @@ b2Vec2 Car::getPosition() {
 
     //TODO change this to variable
     return bodies_["chassis"]->GetPosition();
+}
+
+void Car::setKeyboardManager(KeyboardManager *keyboardManager) {
+    this->keyboardManager_ = keyboardManager;
+}
+
+void Car::update() {
+    //add force to body depending on keybord manager state
+    if(keyboardManager_ == nullptr){
+        Game::threadOut << "keyboard manager is not inited!\n";
+    }
+    // claculate power to apply
+    b2Vec2 forceToApply(0,0);
+
+    if(keyboardManager_->getKeyState(KeyboardManager::UP)){
+        forceToApply.y+=10;
+    }
+    if(keyboardManager_->getKeyState(KeyboardManager::DOWN)){
+        forceToApply.y-=10;
+    }
+    if(keyboardManager_->getKeyState(KeyboardManager::RIGHT)){
+        forceToApply.y+=10;
+    }
+    if(keyboardManager_->getKeyState(KeyboardManager::LEFT)){
+        forceToApply.y-=10;
+    }
 }

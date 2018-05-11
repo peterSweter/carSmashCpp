@@ -13,10 +13,17 @@ class KeyboardManager {
 public:
 
     KeyboardManager();
-    void keyDown(int keyID);
-    void keyUp(int keyID);
+    void keyDown(int keyCode);
+    void keyUp(int keyCode);
 
+    bool getKeyState(int keyCode);
 
+    static const int LEFT = 37;
+    static const int UP = 38;
+    static const int RIGHT = 39;
+    static const int DOWN = 40;
+
+    void handleInput(int keyCode, char state);
 };
 
 

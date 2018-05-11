@@ -69,7 +69,7 @@ void Player::handleMessage(std::shared_ptr<Json> message) {
             nickname_ = message->at("nickname").get<std::string>();
 
             auto carPtr = carFactory_->create(carModelID);
-            carPtr->setPLayer(this);
+            carPtr->setPlayer(this);
 
             Game::threadOut << "created new car" << std::endl;
 

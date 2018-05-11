@@ -28,7 +28,7 @@ private:
 public:
     GameSession(std::shared_ptr<Car> car, std::string nickname, Box2dManager * box2dManager);
     void handleInput(std::shared_ptr<Json> msg);
-    std::map<std::string, std::string> getData();
+
     bool sessionOver_ = false;
 
     //TODO RayCast Data

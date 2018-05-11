@@ -14,12 +14,14 @@
 
 #include "../../dataCollector/DataCollectableOnceI.h"
 #include "../../player/PlayerI.h"
+#include "../../input/KeyboardManager.h"
 
 
 class Car : public DataCollectableOnceI {
 
     Box2dManager * box2dManager_;
     PlayerI * player_;
+    KeyboardManager * keyboardManager_ = nullptr;
 
 
 public:
@@ -28,10 +30,10 @@ public:
     std::map<std::string, CarPart> carParts_;
 
     Car(std::shared_ptr<CarPrototype> carPrototype, Box2dManager * box2dManager);
-    void setPLayer(PlayerI * player);
+    void setPlayer(PlayerI * player);
+    void setKeyboardManager(KeyboardManager * keyboardManager);
+    void update();
     b2Vec2 getPosition();
-
-private:
 
     //TODO checking if data was fetched already from this object
     std::string getJsonData();

@@ -19,3 +19,17 @@ void KeyboardManager::keyUp(int keyID) {
         keys[keyID] = false;
     }
 }
+
+void KeyboardManager::handleInput(int keyCode, char state) {
+
+    if(state == 'u'){
+        keyUp(keyCode);
+    }else{
+        keyDown(keyCode);
+    }
+
+}
+
+bool KeyboardManager::getKeyState(int keyCode) {
+    return keys[keyCode];
+}

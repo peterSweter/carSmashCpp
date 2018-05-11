@@ -74,6 +74,12 @@
         ]
       }
     ]
+  },
+
+  "keyboard event pattern" : {
+    "t" : "k",
+    "v" :49,
+    "state" : "u/d"
   }
 }
 

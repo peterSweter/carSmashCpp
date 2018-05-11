@@ -28,13 +28,6 @@ void GameSession::handleInput(std::shared_ptr<Json> msg) {
     }
 }
 
-std::map<std::string, std::string> GameSession::getData() {
-    //TODO data should be sent from there not from invoking data from player from this class.
-
-    return {{"t", "u"},
-            {"x", std::to_string(this->x)},
-            {"y", std::to_string(this->y)}};
-}
 
 void GameSession::update() {
 
@@ -47,6 +40,8 @@ void GameSession::update() {
 
 GameSession::GameSession(std::shared_ptr<Car> car, std::string nickname, Box2dManager *box2dManager) : car_(
         std::move(car)), nickname_(nickname), dataCollector_(box2dManager) {
+
+    car_->setKeyboardManager(&keyboardManager_);
 
 }
 
@@ -67,6 +62,9 @@ void GameSession::handleMessage(std::shared_ptr<Json> message) {
     switch(messageType){
         case 'k':
             //keyboard handling
+            int keyValue = message->find("v").value().get<int>();
+            char state = message->find("state").value().get<char>();
+            keyboardManager_.handleInput(keyValue, state);
             break;
     }
 
