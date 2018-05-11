@@ -5,13 +5,12 @@
 #include "DataCollector.h"
 #include "DataCollectableOnceI.h"
 
-std::string DataCollector::getJsonData(Player * player, b2Vec2 playerPosition, bool updateCount) {
+std::string DataCollector::getJsonData(b2Vec2 playerPosition) {
 
     jsonData_ = "";
     recenterAABB(playerPosition);
     //TODO first append data of player's car
-    this->player_ = player;
-    this->updateCount_ = updateCount;
+    this->updateCount_ = !updateCount_;
 
 
     box2dManager_->queryWorld(this,aabb_);
@@ -40,7 +39,7 @@ void DataCollector::recenterAABB(b2Vec2 playerPos) {
 bool DataCollector::ReportFixture(b2Fixture *fixture) {
 
     //TODO create interface for querying data
-    jsonData_+= static_cast<DataCollectableOnceI*>(fixture->GetBody()->GetUserData())->getJsonData(player_, updateCount_);
+    jsonData_+= static_cast<DataCollectableOnceI*>(fixture->GetBody()->GetUserData())->getJsonData(this, updateCount_);
     // if return true query will keep going and find all fixtures in AABB area
     return true;
 }

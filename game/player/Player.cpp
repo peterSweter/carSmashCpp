@@ -10,19 +10,23 @@ void Player::update() {
 
         auto tmpMessage = std::move(sessionI_->getMessages()->front());
         sessionI_->getMessages()->pop();
-        handleMessage(tmpMessage);
+
+        if(gameSessionI_){
+            gameSessionI_->handleInput(tmpMessage);
+        }else{
+            handleMessage(tmpMessage);
+        }
 
     }
 
     if (gameSessionI_) {
         gameSessionI_->update();
 
+        if(!gameSessionI_->isAlive()){
+            gameSessionI_.reset();
+        }
 
-        //TODO query data and send
-        updateCount_ = !updateCount_;
-
-        Json json = Json::parse(dataCollector_.getJsonData(this, gameSessionI_->getCar()->getPosition(), this->getUpdateCount()));
-        sessionI_->sendJSON(json);
+        sessionI_->sendJSON(gameSessionI_->getDataFrame());
 
     }
 
@@ -31,7 +35,6 @@ void Player::update() {
 
 Player::Player(std::shared_ptr<SessionI> &&sessionI, CarFactory *carFactory, Box2dManager * box2dManager) : sessionI_(std::move(sessionI)),
                                                                                carFactory_(carFactory),
-                                                                               dataCollector_(box2dManager_),
                                                                                box2dManager_(box2dManager) {
     Game::threadOut << "Created new player " << std::endl;
 }
@@ -39,7 +42,7 @@ Player::Player(std::shared_ptr<SessionI> &&sessionI, CarFactory *carFactory, Box
 void Player::handleMessage(std::shared_ptr<Json> message) {
 
     //TODO catch exceptions while parsing json data package
-    //TODO checking if player is in appropriate state to sent ceratin type of message
+    //TODO checking if player is in appropriate state to sent certain type of message
 
     //Game::threadOut << "Player got message from client" << std::endl;
 
@@ -49,6 +52,8 @@ void Player::handleMessage(std::shared_ptr<Json> message) {
     }
 
     char messageType = messageTypeIt.value().get<std::string>()[0];
+
+
 
     switch (messageType) {
         case 'n': {
@@ -68,7 +73,7 @@ void Player::handleMessage(std::shared_ptr<Json> message) {
 
             Game::threadOut << "created new car" << std::endl;
 
-            gameSessionI_ = std::make_shared<GameSession>(carPtr, nickname_);
+            gameSessionI_ = std::make_shared<GameSession>(carPtr, nickname_, box2dManager_);
 
             break;
         }
@@ -78,11 +83,12 @@ void Player::handleMessage(std::shared_ptr<Json> message) {
             break;
 
         case 'k':
-            //keyboard event delegate to game object
+            //if game session is alive input is being delegated to gamesession
+         /*   //keyboard event delegate to game object
             if (gameSessionI_) {
                 gameSessionI_->handleInput(message);
                 sessionI_->sendJSON(Json(gameSessionI_->getData()));
-            }
+            }*/
             break;
     }
 }
@@ -95,7 +101,4 @@ std::shared_ptr<GameSession> Player::getGameSession()  {
     return gameSessionI_;
 }
 
-const bool Player::getUpdateCount() {
-    return this->updateCount_;
-}
 

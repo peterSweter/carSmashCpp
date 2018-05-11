@@ -79,6 +79,8 @@ public:
 
     void sendJSON(Json msg) override;
 
+    void sendJSON(std::shared_ptr<Json> msg) override;
+
     ThreadSafeQueue<std::shared_ptr<Json>> * getMessages() override;
 
 

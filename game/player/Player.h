@@ -20,11 +20,8 @@ private:
     std::shared_ptr<SessionI> sessionI_;
     std::shared_ptr<GameSession> gameSessionI_;
     CarFactory *carFactory_;
-
-    DataCollector dataCollector_;
     std::string nickname_;
     Box2dManager *box2dManager_;
-    bool updateCount_ = false;
 
 public:
     std::string getNickname() override;
@@ -38,7 +35,7 @@ public:
 
     std::shared_ptr<GameSession> getGameSession();
 
-    const bool getUpdateCount();
+
 
 };
 

@@ -22,14 +22,13 @@ private:
     float32 width_;
     float32 height_;
     Box2dManager * box2dManager_;
-    Player * player_;
-    bool updateCount_;
     std::string jsonData_;
+    bool updateCount_ = false;
 
 
 public:
-
-    std::string getJsonData(Player * player, b2Vec2 , bool);
+    //TODO change player to data collector
+    std::string getJsonData(b2Vec2);
     void recenterAABB(b2Vec2);
 
     DataCollector(Box2dManager * box2dManager);

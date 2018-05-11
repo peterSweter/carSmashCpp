@@ -7,20 +7,21 @@
 
 
 #include "DataCollectableI.h"
+#include "DataCollector.h"
 
 class Player;
 
 class DataCollectableOnceI : public DataCollectableI {
 private:
     bool updateCounter_ = false;
-    Player *lastUpdatePlayerPtr_ = nullptr;
+    DataCollector *lastUpdatePlayerPtr_ = nullptr;
 
     virtual std::string getJsonData() = 0;
 
-    void setGuards(Player *playerPtr, bool updateCounter);
+    void setGuards(DataCollector *dataCollectorPtr, bool updateCounter);
 
 public:
-    std::string getJsonData(Player *playerPtr, bool updateCounter);
+    std::string getJsonData(DataCollector *dataCollectorPtr, bool updateCounter);
 
 
 };

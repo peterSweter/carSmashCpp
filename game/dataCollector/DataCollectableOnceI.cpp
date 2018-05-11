@@ -4,19 +4,20 @@
 
 #include <string>
 #include "DataCollectableOnceI.h"
+#include "DataCollector.h"
 
-std::string DataCollectableOnceI::getJsonData(Player *playerPtr, bool updateCounter) {
+std::string DataCollectableOnceI::getJsonData(DataCollector *dataCollectorPtr, bool updateCounter) {
 
-    if(lastUpdatePlayerPtr_ == playerPtr && updateCounter_ == updateCounter ){
+    if(lastUpdatePlayerPtr_ == dataCollectorPtr && updateCounter_ == updateCounter ){
         return "";
     }
 
-    setGuards(playerPtr, updateCounter);
+    setGuards(dataCollectorPtr, updateCounter);
 
     return getJsonData();
 }
 
-void DataCollectableOnceI::setGuards(Player *playerPtr, bool updateCounter) {
-    this->lastUpdatePlayerPtr_ = playerPtr;
+void DataCollectableOnceI::setGuards(DataCollector *dataCollectorPtr, bool updateCounter) {
+    this->lastUpdatePlayerPtr_ = dataCollectorPtr;
     this->updateCounter_ = updateCounter;
 }

@@ -19,6 +19,7 @@ class SessionI {
 public:
 
     virtual void sendJSON(Json msg) = 0;
+    virtual void sendJSON(std::shared_ptr<Json> msg) = 0;
     virtual ThreadSafeQueue<std::shared_ptr<Json>> * getMessages() = 0;
     virtual bool hasMessages() = 0;
 };

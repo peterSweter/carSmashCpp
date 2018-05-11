@@ -151,10 +151,20 @@ void Session::sendJSON(Json msg) {
 
 }
 
+void Session::sendJSON(std::shared_ptr<Json> msg) {
+    toSendMessagesQ_.push(msg);
+
+
+    if(!isWriting_){
+        isWriting_ = true;
+        do_write();
+    }
+}
+
+
 ThreadSafeQueue<std::shared_ptr<Json>> * Session::getMessages() {
     return &receivedMessagesQ_;
 }
-
 
 bool Session::hasMessages() {
     return receivedMessagesQ_.empty();
