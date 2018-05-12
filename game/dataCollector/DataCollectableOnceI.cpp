@@ -6,10 +6,10 @@
 #include "DataCollectableOnceI.h"
 #include "DataCollector.h"
 
-std::string DataCollectableOnceI::getJsonData(DataCollector *dataCollectorPtr, bool updateCounter) {
+std::shared_ptr<Json> DataCollectableOnceI::getJsonData(DataCollector *dataCollectorPtr, bool updateCounter) {
 
     if(lastUpdatePlayerPtr_ == dataCollectorPtr && updateCounter_ == updateCounter ){
-        return "";
+        return nullptr;
     }
 
     setGuards(dataCollectorPtr, updateCounter);

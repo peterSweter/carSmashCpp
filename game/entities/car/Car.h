@@ -27,7 +27,7 @@ class Car : public DataCollectableOnceI {
 public:
 
     std::map<std::string,b2Body*> bodies_;
-    std::map<std::string, CarPart> carParts_;
+    std::map<std::string, std::shared_ptr<CarPart>> carParts_;
 
     Car(std::shared_ptr<CarPrototype> carPrototype, Box2dManager * box2dManager);
     void setPlayer(PlayerI * player);
@@ -36,7 +36,7 @@ public:
     b2Vec2 getPosition();
 
     //TODO checking if data was fetched already from this object
-    std::string getJsonData();
+    std::shared_ptr<Json> getJsonData();
 
 
 };

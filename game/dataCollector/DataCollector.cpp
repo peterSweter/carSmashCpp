@@ -2,6 +2,7 @@
 // Created by peter on 5/3/18.
 //
 
+#include <iostream>
 #include "DataCollector.h"
 #include "DataCollectableOnceI.h"
 
@@ -37,9 +38,24 @@ void DataCollector::recenterAABB(b2Vec2 playerPos) {
 }
 
 bool DataCollector::ReportFixture(b2Fixture *fixture) {
-
+    std::cout << "[DataCollector::ReportFixture]" << std::endl;
     //TODO create interface for querying data
-    jsonData_+= static_cast<DataCollectableOnceI*>(fixture->GetBody()->GetUserData())->getJsonData(this, updateCount_);
+    //return true;
+    if(DataCollectableOnceI * dataCollectable = reinterpret_cast<DataCollectableOnceI*>(fixture->GetBody()->GetUserData())){
+
+        auto jsonColectedPtr = dataCollectable->getJsonData(this, updateCount_);
+
+        if(jsonColectedPtr){
+            jsonData_+= jsonColectedPtr->dump();
+        }
+
+        std::cout << "[DataCollector::ReportFixture]  succesfull conversion" <<  std::endl;
+
+    }else{
+        std::cout << "[DataCollector::ReportFixture]  Unsuccesfull conversion" <<  std::endl;
+
+    }
+    std::cout << "[DataCollector::ReportFixture] " << jsonData_ <<  std::endl;
     // if return true query will keep going and find all fixtures in AABB area
     return true;
 }

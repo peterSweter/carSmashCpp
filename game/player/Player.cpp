@@ -20,6 +20,7 @@ void Player::update() {
     }
 
     if (gameSessionI_) {
+        Game::threadOut << "Sending message" << std::endl;
         gameSessionI_->update();
 
         if(!gameSessionI_->isAlive()){
@@ -53,6 +54,7 @@ void Player::handleMessage(std::shared_ptr<Json> message) {
 
     char messageType = messageTypeIt.value().get<std::string>()[0];
 
+    std::cout << message->dump() << std::endl;
 
 
     switch (messageType) {
@@ -68,12 +70,15 @@ void Player::handleMessage(std::shared_ptr<Json> message) {
             std::string carModelID = message->at("carModelID").get<std::string>();
             nickname_ = message->at("nickname").get<std::string>();
 
+
             auto carPtr = carFactory_->create(carModelID);
             carPtr->setPlayer(this);
+            std::cout << "created new car" << std::endl;
 
-            Game::threadOut << "created new car" << std::endl;
 
             gameSessionI_ = std::make_shared<GameSession>(carPtr, nickname_, box2dManager_);
+
+            std::cout << "created game session" << std::endl;
 
             break;
         }

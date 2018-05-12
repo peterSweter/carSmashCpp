@@ -25,10 +25,14 @@ void CarBodyPrototype::parseJson(Json &json) {
 
     for(auto & fixtureJson : fixtures){
         std::string carPartID = fixtureJson["carPartID"].get<std::string>();
-        carParts_.emplace(carPartID, CarPartPrototype(fixtureJson));
+        carParts_.insert(make_pair(carPartID, std::make_shared<CarPartPrototype>(fixtureJson)));
     }
 
 
 
 
+}
+
+CarBodyPrototype::~CarBodyPrototype() {
+    std::cout << "[CarBodyPrototype] Deconstructor." << std::endl;
 }

@@ -22,7 +22,7 @@ public:
     std::shared_ptr<Car>create(std::string carModelID);
 
 
-
+    ~CarFactory();
 
 };
 

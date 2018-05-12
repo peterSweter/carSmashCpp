@@ -7,11 +7,12 @@
 
 
 #include <string>
+#include "../../networking/SessionI.h"
 
 class DataCollectableI {
 
 public:
-    virtual std::string getJsonData() = 0;
+    virtual std::shared_ptr<Json> getJsonData() = 0;
 
 };
 

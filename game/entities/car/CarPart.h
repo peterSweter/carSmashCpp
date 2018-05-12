@@ -25,7 +25,8 @@ public:
 
     CarPart(b2Body * body , CarPartPrototype * carPartPrototype);
 
-    std::string getJsonData() override;
+    std::shared_ptr<Json> getJsonData() override;
+    ~CarPart();
 };
 
 

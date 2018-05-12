@@ -20,7 +20,7 @@ void Game::run() {
 
     while (true) {
         auto start = std::chrono::system_clock::now();
-        //b2dWordl.step
+        box2dManager_->worldStep();
 
         //this is temporary game loop
         playersManager_->update();

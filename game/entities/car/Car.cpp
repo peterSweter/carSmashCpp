@@ -4,6 +4,7 @@
 
 #include "Car.h"
 #include "../../Game.h"
+#include "CarPart.h"
 
 Car::Car(std::shared_ptr<CarPrototype> carPrototype, Box2dManager * box2dManager) : box2dManager_(box2dManager) {
 
@@ -11,24 +12,31 @@ Car::Car(std::shared_ptr<CarPrototype> carPrototype, Box2dManager * box2dManager
 
     // creating bodies:
 
+    std::cout << "[Car] Constructor" << std::endl;
+
     for(auto carBodyPrototype : carPrototype->carBodyPrototypes_){
 
         std::string bodyName = carBodyPrototype.first;
+        std::cout << "[Car] bodyName: " << bodyName <<  std::endl;
 
-        b2Body * body  = box2dManager_->createBody(&carBodyPrototype.second.bodyDef_);
+        b2Body * body  = box2dManager_->createBody(&carBodyPrototype.second->bodyDef_);
         body->SetUserData(this);
 
-        bodies_.emplace(bodyName, body);
+        //DataCollectableOnceI* testPtr = (DataCollectableOnceI*)(body->GetUserData());
+
+        bodies_.insert(make_pair(bodyName, body));
 
 
         //creating carparts
+        std::cout << "[Car] Creating car parts. " << std::endl;
 
-        for(auto carPart : carBodyPrototype.second.carParts_){
-            carParts_.emplace(carPart.first, CarPart(body, &carPart.second));
+        for(auto carPart : carBodyPrototype.second->carParts_){
+            carParts_.emplace(carPart.first, std::make_shared<CarPart>(body, carPart.second.get()));
 
         }
 
 
+        std::cout << "[Car] Created body. " <<  std::endl;
 
     }
 
@@ -39,35 +47,57 @@ Car::Car(std::shared_ptr<CarPrototype> carPrototype, Box2dManager * box2dManager
 
 }
 
-std::string Car::getJsonData() {
+std::shared_ptr<Json> Car::getJsonData() {
+
+    std::cout << "[Car::getJsonData()] " << std::endl;
 
     //TODO consider caching more display data
+    //TODO change to nlohman::josn and chache
 
-    std::string jsonDisplaydata = "{ \"t\" : \"car\", \"nick\" : \""+ player_->getNickname() +  " \",  \"bodies\" : [ ";
+    auto jsonData  = std::make_shared<Json>();
+
+    jsonData->emplace("t", "car");
+    jsonData->emplace("nick", player_->getNickname());
+
+    Json bodiesJsonArray;
+
 
     for(auto b : bodies_){
+
         b2Body * body = b.second;
-        jsonDisplaydata += "{ \" x\" : "+ std::to_string(body->GetPosition().x)+  " \"y\" : " + std::to_string(body->GetPosition().y) + ", ";
-        jsonDisplaydata += "\"angle\"" + std::to_string(body->GetAngle()) + ",";
-        jsonDisplaydata += "\"fixtures\" : [";
+
+        Json bodyJsonObj;
+        bodyJsonObj.emplace("x", body->GetPosition().x);
+        bodyJsonObj.emplace("y", body->GetPosition().y);
+        bodyJsonObj.emplace("angle", body->GetAngle());
+
+
+
+
+        std::cout << "[Car] Inside bodies data collecting" << std::endl;
+
+        Json fixturesArray;
 
         for (b2Fixture* f = b.second->GetFixtureList(); f; f = f->GetNext())
         {
-            jsonDisplaydata+= static_cast<CarPart*>(f->GetUserData())->getJsonData();
-            if(f->GetNext()){
-                jsonDisplaydata+=" , ";
-            }
+
+            fixturesArray.push_back(*reinterpret_cast<CarPart*>(f->GetUserData())->getJsonData());
+            std::cout << "[Car] succesfull conversion" << std::endl;
+
+
         }
 
-        // end of fixtures
-        jsonDisplaydata += "]";
 
+        bodyJsonObj.emplace("fixtures", fixturesArray);
+        bodiesJsonArray.push_back(bodyJsonObj);
     }
 
-    //end of bodies obj array
-    jsonDisplaydata += " ]}";
+    jsonData->emplace("bodies", bodiesJsonArray);
 
-    return jsonDisplaydata;
+
+    std::cout<< "[Car] Json parsing test" << jsonData->dump() << std::endl;
+
+    return jsonData;
 }
 
 void Car::setPlayer(PlayerI *player) {

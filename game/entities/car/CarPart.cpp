@@ -2,17 +2,29 @@
 // Created by peter on 4/14/18.
 //
 
+#include <iostream>
 #include "CarPart.h"
 
 CarPart::CarPart(b2Body * body, CarPartPrototype *carPartPrototype) :  body_(body) , carPartPrototype_(carPartPrototype) {
+    std::cout << "[CarPart] constructor" << std::endl;
+    fixture_ = body_->CreateFixture(carPartPrototype->getFixtureDef());
 
-    fixture_ = body_->CreateFixture(&carPartPrototype->fixtureDef_);
+    std::cout << "[CarPart] created fixture" << std::endl;
+
+
     fixture_->SetUserData(this);
+
     durability_ = carPartPrototype->durability_;
     color_ =  carPartPrototype->color_;
 }
 
-std::string CarPart::getJsonData() {
+std::shared_ptr<Json> CarPart::getJsonData() {
+    std::cout << "[CarPart] getJsonData " << *carPartPrototype_->getJsonDisplayData() << std::endl;
 
-    return *carPartPrototype_->getJsonDisplayData();
+    return std::make_shared<Json>(Json::parse(*carPartPrototype_->getJsonDisplayData()));
+
+}
+
+CarPart::~CarPart() {
+    std::cout << "[CarPart] Deconstruction." << std::endl;
 }

@@ -17,10 +17,11 @@ class CarBodyPrototype {
 public:
     b2BodyDef bodyDef_;
     std::string bodyID_;
-    std::map<std::string, CarPartPrototype> carParts_;
+    std::map<std::string, std::shared_ptr<CarPartPrototype>> carParts_;
 
     explicit CarBodyPrototype(Json & json);
     void parseJson(Json & json);
+    ~CarBodyPrototype();
 
 };
 

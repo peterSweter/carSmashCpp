@@ -8,6 +8,7 @@
 
 #include "DataCollectableI.h"
 #include "DataCollector.h"
+#include "../../networking/SessionI.h"
 
 class Player;
 
@@ -16,12 +17,12 @@ private:
     bool updateCounter_ = false;
     DataCollector *lastUpdatePlayerPtr_ = nullptr;
 
-    virtual std::string getJsonData() = 0;
+    virtual std::shared_ptr<Json> getJsonData() = 0;
 
     void setGuards(DataCollector *dataCollectorPtr, bool updateCounter);
 
 public:
-    std::string getJsonData(DataCollector *dataCollectorPtr, bool updateCounter);
+    std::shared_ptr<Json> getJsonData(DataCollector *dataCollectorPtr, bool updateCounter);
 
 
 };

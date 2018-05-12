@@ -16,7 +16,7 @@ void CarPrototype::parseJson(Json &json) {
 
     for(Json & bodyJson : json["bodies"]){
 
-        carBodyPrototypes_.insert(std::make_pair(bodyJson["bodyID"].get<std::string>(), CarBodyPrototype(bodyJson)));
+        carBodyPrototypes_.insert(std::make_pair(bodyJson["bodyID"].get<std::string>(), std::make_shared<CarBodyPrototype>(bodyJson)));
     }
 
     //joints
@@ -24,4 +24,8 @@ void CarPrototype::parseJson(Json &json) {
     for(Json & jointJson : json["joints"]){
         joints_.push_back(JointPrototype(jointJson));
     }
+}
+
+CarPrototype::~CarPrototype() {
+    std::cout << "[CarPrototype] Destructor." << std::endl;
 }

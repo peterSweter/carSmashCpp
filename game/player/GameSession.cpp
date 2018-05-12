@@ -2,6 +2,7 @@
 // Created by peter on 3/31/18.
 //
 
+#include <iostream>
 #include "GameSession.h"
 
 void GameSession::handleInput(std::shared_ptr<Json> msg) {
@@ -35,12 +36,14 @@ void GameSession::update() {
     // TODO sendign update frame specification
     // TODO push game session logic there ?
 
+    std::cout << "[GameSession] Update. " << std::endl;
+
 
 }
 
 GameSession::GameSession(std::shared_ptr<Car> car, std::string nickname, Box2dManager *box2dManager) : car_(
         std::move(car)), nickname_(nickname), dataCollector_(box2dManager) {
-
+    std::cout << "[GameSession] Constructor." << std::endl;
     car_->setKeyboardManager(&keyboardManager_);
 
 }
@@ -72,6 +75,7 @@ void GameSession::handleMessage(std::shared_ptr<Json> message) {
 
 std::shared_ptr<Json> GameSession::getDataFrame() {
 
+    std::cout << "[GameSession] getDataFrame" << std::endl;
     Json json = Json::parse(dataCollector_.getJsonData(getCar()->getPosition()));
     return std::make_shared<Json>(json);
 }

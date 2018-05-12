@@ -39,8 +39,8 @@ void CarModels::loadModels() {
             exit(-1);
         }
 
-
-        models_.emplace(modelName, std::make_shared<CarPrototype>(json));
+        auto ptr  =  std::make_shared<CarPrototype>(json);
+        models_.insert(make_pair(modelName,ptr));
 
 
     }
@@ -49,5 +49,12 @@ void CarModels::loadModels() {
 }
 
 std::shared_ptr<CarPrototype> CarModels::getModel(std::string modelID) {
+    if(models_.find(modelID) == models_.end()){
+        std::cout << "[CarModels] Do not have model with id: " << modelID << std::endl;
+    }
     return models_.find(modelID)->second;
+}
+
+CarModels::~CarModels() {
+    std::cout << "[CarModels] Deconstructor." << std::endl;
 }

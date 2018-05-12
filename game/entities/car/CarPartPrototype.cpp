@@ -2,15 +2,16 @@
 // Created by peter on 4/14/18.
 //
 
+#include <iostream>
 #include "CarPartPrototype.h"
 
-CarPartPrototype::CarPartPrototype(Json &json) {
+CarPartPrototype::CarPartPrototype(Json &json) : polygonShape_() {
     parseJson(json);
 }
 
 void CarPartPrototype::parseJson(Json &json) {
 
-    //TODO importand debug creating json to send, maybe swith to nolhamn json due to more readable code and then generate static to_str from that ?
+    //TODO importand debug creating json to send, maybe switch to nolhamn json due to more readable code and then generate static to_str from that ? (1)
 
     jsonDisplayData_ = "{";
 
@@ -26,9 +27,11 @@ void CarPartPrototype::parseJson(Json &json) {
     //shape of fixture
     std::string shapeType = json["shape"].get<std::string>();
 
-    jsonDisplayData_ += " \"shape\" : " + shapeType + "\" ";
+    jsonDisplayData_ += " \"shape\" : \"" + shapeType + "\" ";
 
     if (shapeType == "box") {
+
+        std::cout << "[CarPartPrototype] Creating box shaped carPart. " << std::endl;
 
 
         float width, height;
@@ -36,11 +39,16 @@ void CarPartPrototype::parseJson(Json &json) {
         width = json["width"].get<float>();
         height = json["height"].get<float>();
 
-        jsonDisplayData_ += " , \"width\" : " + std::to_string(width) + "\" ";
-        jsonDisplayData_ += " , \"height\" : " + std::to_string(height) + "\" ";
+        jsonDisplayData_ += " , \"width\" : \"" + std::to_string(width) + "\" ";
+        jsonDisplayData_ += " , \"height\" : \"" + std::to_string(height) + "\" ";
 
         polygonShape_.SetAsBox(width, height);
         fixtureDef_.shape = &polygonShape_;
+
+      /*  b2PolygonShape * polygonShape = new b2PolygonShape();
+        polygonShape->SetAsBox(width, height);
+        fixtureDef_.shape = polygonShape;
+       */
 
         fixtureDef_.density = density;
         fixtureDef_.friction = friction;
@@ -51,7 +59,7 @@ void CarPartPrototype::parseJson(Json &json) {
     //visual
 
     color_ = json["color"].get<std::string>();
-    jsonDisplayData_ += " , \"color\" : " + color_ + "\" ";
+    jsonDisplayData_ += " , \"color\" : \"" + color_ + "\" ";
 
     //close json string
 
@@ -60,9 +68,15 @@ void CarPartPrototype::parseJson(Json &json) {
 }
 
 b2FixtureDef *CarPartPrototype::getFixtureDef() {
+
+    std::cout << "[CarPartPrototype] getFixtureDef" << std::endl;
     return &fixtureDef_;
 }
 
 const std::string *CarPartPrototype::getJsonDisplayData() const {
     return &jsonDisplayData_;
+}
+
+CarPartPrototype::~CarPartPrototype() {
+    std::cout << "[CarPartPrototype] Deconstructor id: " <<  carPartID_ << std::endl;
 }

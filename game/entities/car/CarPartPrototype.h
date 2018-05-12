@@ -30,6 +30,7 @@ public:
     void parseJson(Json & json);
 
     b2FixtureDef* getFixtureDef();
+    ~CarPartPrototype();
 
 };
 
