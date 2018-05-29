@@ -6,16 +6,23 @@
 #include "DataCollector.h"
 #include "DataCollectableOnceI.h"
 
-std::string DataCollector::getJsonData(b2Vec2 playerPosition) {
+std::string DataCollector::getJsonData(b2Vec2 playerPosition, DataCollectableOnceI * callerObject) {
+    jsonData_ = "{\"gameObjects\" : [ ";
 
-    jsonData_ = "";
     recenterAABB(playerPosition);
-    //TODO first append data of player's car
+
     this->updateCount_ = !updateCount_;
 
+    auto jsonColectedPtr = callerObject->getJsonData(this, updateCount_);
+    if(jsonColectedPtr){
+        jsonData_+= jsonColectedPtr->dump();
+    }
 
     box2dManager_->queryWorld(this,aabb_);
 
+    jsonData_ +="]}";
+
+    std::cout << "[DataCollector::getJsonData] collected json" << jsonData_ <<  std::endl;
 
     return jsonData_;
 
@@ -45,7 +52,11 @@ bool DataCollector::ReportFixture(b2Fixture *fixture) {
 
         auto jsonColectedPtr = dataCollectable->getJsonData(this, updateCount_);
 
-        if(jsonColectedPtr){
+        if(jsonColectedPtr != nullptr ){
+
+
+            jsonData_+=" , ";
+
             jsonData_+= jsonColectedPtr->dump();
         }
 
@@ -55,7 +66,7 @@ bool DataCollector::ReportFixture(b2Fixture *fixture) {
         std::cout << "[DataCollector::ReportFixture]  Unsuccesfull conversion" <<  std::endl;
 
     }
-    std::cout << "[DataCollector::ReportFixture] " << jsonData_ <<  std::endl;
+
     // if return true query will keep going and find all fixtures in AABB area
     return true;
 }

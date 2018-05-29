@@ -19,6 +19,8 @@ void CarBodyPrototype::parseJson(Json &json) {
         bodyDef_.type = b2_dynamicBody;
     }
 
+
+
     //create car parts;
 
     Json & fixtures  = json["fixtures"];

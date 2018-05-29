@@ -2,6 +2,7 @@
 // Created by peter on 5/11/18.
 //
 
+#include <iostream>
 #include "KeyboardManager.h"
 
 KeyboardManager::KeyboardManager() :keys(256, false) {
@@ -21,6 +22,7 @@ void KeyboardManager::keyUp(int keyID) {
 }
 
 void KeyboardManager::handleInput(int keyCode, char state) {
+    std::cout << "handle input " << keyCode << " " << state << std::endl;
 
     if(state == 'u'){
         keyUp(keyCode);

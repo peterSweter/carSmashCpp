@@ -10,6 +10,7 @@
 #include "../entities/car/Car.h"
 #include "../../networking/MsgAcceptorI.h"
 #include "../input/KeyboardManager.h"
+#include "../dataCollector/DataCollector.h"
 
 
 class GameSession : public MsgAcceptorI{

@@ -6,7 +6,7 @@
 #include "DataCollectableOnceI.h"
 #include "DataCollector.h"
 
-std::shared_ptr<Json> DataCollectableOnceI::getJsonData(DataCollector *dataCollectorPtr, bool updateCounter) {
+std::shared_ptr<Json> DataCollectableOnceI::getJsonData(void *dataCollectorPtr, bool updateCounter) {
 
     if(lastUpdatePlayerPtr_ == dataCollectorPtr && updateCounter_ == updateCounter ){
         return nullptr;
@@ -17,7 +17,7 @@ std::shared_ptr<Json> DataCollectableOnceI::getJsonData(DataCollector *dataColle
     return getJsonData();
 }
 
-void DataCollectableOnceI::setGuards(DataCollector *dataCollectorPtr, bool updateCounter) {
+void DataCollectableOnceI::setGuards(void *dataCollectorPtr, bool updateCounter) {
     this->lastUpdatePlayerPtr_ = dataCollectorPtr;
     this->updateCounter_ = updateCounter;
 }

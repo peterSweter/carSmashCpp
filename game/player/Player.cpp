@@ -6,13 +6,14 @@
 #include "../Game.h"
 
 void Player::update() {
+
     while (!sessionI_->getMessages()->empty()) {
 
         auto tmpMessage = std::move(sessionI_->getMessages()->front());
         sessionI_->getMessages()->pop();
 
         if(gameSessionI_){
-            gameSessionI_->handleInput(tmpMessage);
+            gameSessionI_->handleMessage(tmpMessage);
         }else{
             handleMessage(tmpMessage);
         }
@@ -45,7 +46,7 @@ void Player::handleMessage(std::shared_ptr<Json> message) {
     //TODO catch exceptions while parsing json data package
     //TODO checking if player is in appropriate state to sent certain type of message
 
-    //Game::threadOut << "Player got message from client" << std::endl;
+    std::cout  << "Player got message from client" << std::endl;
 
     auto messageTypeIt = message->find("t");
     if (messageTypeIt == message->end()) {
@@ -88,12 +89,11 @@ void Player::handleMessage(std::shared_ptr<Json> message) {
             break;
 
         case 'k':
-            //if game session is alive input is being delegated to gamesession
-         /*   //keyboard event delegate to game object
-            if (gameSessionI_) {
+            // this should happen inside game session lol
+          /*  if (gameSessionI_) {
                 gameSessionI_->handleInput(message);
-                sessionI_->sendJSON(Json(gameSessionI_->getData()));
             }*/
+
             break;
     }
 }

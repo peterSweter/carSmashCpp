@@ -38,6 +38,8 @@ void GameSession::update() {
 
     std::cout << "[GameSession] Update. " << std::endl;
 
+    car_->update();
+
 
 }
 
@@ -54,6 +56,8 @@ const std::shared_ptr<Car> &GameSession::getCar() const {
 
 void GameSession::handleMessage(std::shared_ptr<Json> message) {
 
+    std::cout << "[Game session] Handle message:  " <<  message->dump() << std::endl;
+
 
     auto messageTypeIt = message->find("t");
     if (messageTypeIt == message->end()) {
@@ -65,9 +69,15 @@ void GameSession::handleMessage(std::shared_ptr<Json> message) {
     switch(messageType){
         case 'k':
             //keyboard handling
+
+        std::cout<< "[GameSession] Keyboard message" << std::endl;
+
             int keyValue = message->find("v").value().get<int>();
-            char state = message->find("state").value().get<char>();
+            //TODO create logic for sending proper state of pressed ore released button
+            //char state = message->find("state").value().get<char>();
+            char state = 'd';
             keyboardManager_.handleInput(keyValue, state);
+
             break;
     }
 
@@ -76,7 +86,7 @@ void GameSession::handleMessage(std::shared_ptr<Json> message) {
 std::shared_ptr<Json> GameSession::getDataFrame() {
 
     std::cout << "[GameSession] getDataFrame" << std::endl;
-    Json json = Json::parse(dataCollector_.getJsonData(getCar()->getPosition()));
+    Json json = Json::parse(dataCollector_.getJsonData(getCar()->getPosition(), getCar().get()));
     return std::make_shared<Json>(json);
 }
 

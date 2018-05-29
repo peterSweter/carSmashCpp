@@ -7,22 +7,22 @@
 
 
 #include "DataCollectableI.h"
-#include "DataCollector.h"
-#include "../../networking/SessionI.h"
 
-class Player;
+
+
+
 
 class DataCollectableOnceI : public DataCollectableI {
 private:
     bool updateCounter_ = false;
-    DataCollector *lastUpdatePlayerPtr_ = nullptr;
+    void *lastUpdatePlayerPtr_ = nullptr;
 
     virtual std::shared_ptr<Json> getJsonData() = 0;
 
-    void setGuards(DataCollector *dataCollectorPtr, bool updateCounter);
+    void setGuards(void *dataCollectorPtr, bool updateCounter);
 
 public:
-    std::shared_ptr<Json> getJsonData(DataCollector *dataCollectorPtr, bool updateCounter);
+    std::shared_ptr<Json> getJsonData(void *dataCollectorPtr, bool updateCounter);
 
 
 };

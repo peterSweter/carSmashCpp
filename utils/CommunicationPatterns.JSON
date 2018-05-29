@@ -76,10 +76,35 @@
     ]
   },
 
-  "keyboard event pattern" : {
-    "t" : "k",
-    "v" :49,
-    "state" : "u/d"
-  }
+"game obj check" :{
+  "gameObjects": [
+    {
+      "bodies": [
+        {
+          "angle": 0.0,
+          "fixtures": [
+            {
+              "color": "red",
+              "height": 1.0,
+              "shape": "box",
+              "width": 1.0
+            }
+          ],
+          "x": 0.0,
+          "y": 0.0
+        }
+      ],
+      "nick": "guest",
+      "t": "car"
+    }
+  ]
+}
+,
+
+"keyboard event pattern": {
+"t": "k",
+"v": 49,
+"state": "u/d"
+}
 }
 

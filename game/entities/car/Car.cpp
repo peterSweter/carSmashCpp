@@ -58,6 +58,8 @@ std::shared_ptr<Json> Car::getJsonData() {
 
     jsonData->emplace("t", "car");
     jsonData->emplace("nick", player_->getNickname());
+    jsonData->emplace("x", getPosition().x);
+    jsonData->emplace("y", getPosition().y);
 
     Json bodiesJsonArray;
 
@@ -120,19 +122,28 @@ void Car::update() {
     if(keyboardManager_ == nullptr){
         Game::threadOut << "keyboard manager is not inited!\n";
     }
+
+    Game::threadOut << "[Car] Update()\n";
     // claculate power to apply
     b2Vec2 forceToApply(0,0);
 
     if(keyboardManager_->getKeyState(KeyboardManager::UP)){
-        forceToApply.y+=10;
+        Game::threadOut << "[Car]  KeyboardManager::UP\n";
+
+        forceToApply.y+=1000;
+
     }
     if(keyboardManager_->getKeyState(KeyboardManager::DOWN)){
-        forceToApply.y-=10;
+
+        forceToApply.y-=1000;
     }
     if(keyboardManager_->getKeyState(KeyboardManager::RIGHT)){
-        forceToApply.y+=10;
+        forceToApply.y+=1000;
     }
     if(keyboardManager_->getKeyState(KeyboardManager::LEFT)){
-        forceToApply.y-=10;
+        forceToApply.y-=1000;
     }
+
+    //TODO Improve forces application
+    bodies_["chassis"]->ApplyForce(forceToApply, bodies_["chassis"]->GetWorldCenter(), true);
 }

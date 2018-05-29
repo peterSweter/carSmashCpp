@@ -10,6 +10,7 @@
 #include <Box2D/Box2D.h>
 #include "DataCollectableI.h"
 #include "../box2D/Box2dManager.h"
+#include "DataCollectableOnceI.h"
 
 
 class Player;
@@ -26,9 +27,10 @@ private:
     bool updateCount_ = false;
 
 
+
 public:
     //TODO change player to data collector
-    std::string getJsonData(b2Vec2);
+    std::string getJsonData(b2Vec2,DataCollectableOnceI *);
     void recenterAABB(b2Vec2);
 
     DataCollector(Box2dManager * box2dManager);

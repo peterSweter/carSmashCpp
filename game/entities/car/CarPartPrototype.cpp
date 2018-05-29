@@ -39,8 +39,8 @@ void CarPartPrototype::parseJson(Json &json) {
         width = json["width"].get<float>();
         height = json["height"].get<float>();
 
-        jsonDisplayData_ += " , \"width\" : \"" + std::to_string(width) + "\" ";
-        jsonDisplayData_ += " , \"height\" : \"" + std::to_string(height) + "\" ";
+        jsonDisplayData_ += " , \"width\" : " + std::to_string(width) ;
+        jsonDisplayData_ += " , \"height\" : " + std::to_string(height) ;
 
         polygonShape_.SetAsBox(width, height);
         fixtureDef_.shape = &polygonShape_;
@@ -55,6 +55,8 @@ void CarPartPrototype::parseJson(Json &json) {
         fixtureDef_.restitution = restitution;
 
     }
+
+    //TODO create method for creating polygon shape fixture
 
     //visual
 

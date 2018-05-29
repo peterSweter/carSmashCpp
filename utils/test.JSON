@@ -1,23 +1,45 @@
 {
-  "t": "car",
-  "nick": "guest ",
-  "bodies": [
+  "gameObjects": [
     {
-      " x": 0.000000
-      "y": 0.000000,
-      "angle"
-      0.000000,
-      "fixtures": [
+      "bodies": [
         {
-          "shape": box
-          "  , "
-          width
-          " : 1.000000",
-          "height": 1.000000
-          "  , "
-          color
-          " : red"
+          "angle": 0.0,
+          "fixtures": [
+            {
+              "color": "red",
+              "height": 1.0,
+              "shape": "box",
+              "width": 1.0
+            }
+          ],
+          "x": 0.0,
+          "y": 0.0
         }
-      ]
-    ]
+      ],
+      "nick": "guest",
+      "t": "car"
+    }
+  ]
+}
+
+{
+  "gameObjects": [
+    {
+      "bodies": [
+        {
+          "angle": 0.0,
+          "fixtures": [
+            {
+              "color": "red",
+              "height": 1.0,
+              "shape": "box",
+              "width": 1.0
+            }
+          ],
+          "x": 0.0,
+          "y": 0.0
+        }
+      ],
+      "nick": "guest",
+      "t": "car"
     }
