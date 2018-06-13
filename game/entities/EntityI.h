@@ -7,8 +7,15 @@
 
 
 class EntityI {
+private:
+    double healtPoints;
+
 public:
+
     virtual void update() = 0;
+    virtual bool isAlive() = 0;
+    virtual double getDamageFactor() = 0;
+    virtual double getDamage(double dmg) = 0;
 };
 
 

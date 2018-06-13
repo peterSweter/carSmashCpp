@@ -75,7 +75,7 @@ void GameSession::handleMessage(std::shared_ptr<Json> message) {
             int keyValue = message->find("v").value().get<int>();
             //TODO create logic for sending proper state of pressed ore released button
             //char state = message->find("state").value().get<char>();
-            char state = 'd';
+            char state = message->find("s").value().get<char>();
             keyboardManager_.handleInput(keyValue, state);
 
             break;

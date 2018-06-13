@@ -15,6 +15,7 @@ class JointPrototype {
 public:
     std::string bodyAID_, bodyBID_;
     b2Vec2 localAnchorA_, localAnchorB_;
+    float referenceAngle_;
 
     JointPrototype(Json & json);
     void parseJson(Json & json);

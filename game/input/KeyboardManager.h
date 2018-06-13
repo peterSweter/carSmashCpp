@@ -19,9 +19,9 @@ public:
     bool getKeyState(int keyCode);
 
     static const int LEFT = 37;
-    static const int UP = 38;
+    static const int UP = 40;
     static const int RIGHT = 39;
-    static const int DOWN = 40;
+    static const int DOWN = 38;
 
     void handleInput(int keyCode, char state);
 };

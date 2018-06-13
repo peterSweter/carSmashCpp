@@ -22,6 +22,7 @@ public:
     b2Body * createBody(b2BodyDef * bodyDef);
     b2Fixture * createFixture(b2FixtureDef * fixtureDef);
     void queryWorld(b2QueryCallback * queryCallback, b2AABB);
+    b2RevoluteJoint* createJoint(b2RevoluteJointDef*);
 };
 
 

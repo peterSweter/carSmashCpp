@@ -31,8 +31,8 @@ std::string DataCollector::getJsonData(b2Vec2 playerPosition, DataCollectableOnc
 
 DataCollector::DataCollector(Box2dManager * box2dManager) :
       box2dManager_(box2dManager) {
-    width_ = 10.f;
-    height_= 10.f;
+    width_ = 200.f;
+    height_= 200.f;
 
 }
 

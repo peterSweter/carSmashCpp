@@ -15,6 +15,7 @@
 #include "../../dataCollector/DataCollectableOnceI.h"
 #include "../../player/PlayerI.h"
 #include "../../input/KeyboardManager.h"
+#include "CarEngine/CarEngine.h"
 
 
 class Car : public DataCollectableOnceI {
@@ -22,6 +23,7 @@ class Car : public DataCollectableOnceI {
     Box2dManager * box2dManager_;
     PlayerI * player_;
     KeyboardManager * keyboardManager_ = nullptr;
+    CarEngine carEngine_;
 
 
 public:

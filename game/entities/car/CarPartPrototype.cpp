@@ -54,6 +54,37 @@ void CarPartPrototype::parseJson(Json &json) {
         fixtureDef_.friction = friction;
         fixtureDef_.restitution = restitution;
 
+    }else if(shapeType == "polygon"){
+
+        Json & verticesJson  = json["vertices"];
+        std::vector<b2Vec2> verticesVector;
+
+        jsonDisplayData_ +=", \"vertices\": [";
+        bool first = true;
+
+        for(auto & v : verticesJson){
+
+            if(first){
+                first = false;
+            }else{
+                jsonDisplayData_ +=", ";
+            }
+
+            verticesVector.emplace_back(v["x"].get<float>(), v["y"].get<float>());
+
+            jsonDisplayData_ +="{ \"x\":" + std::to_string(v["x"].get<float>()) + " , \"y\" : " + std::to_string(v["y"].get<float>())+ "}";
+        };
+
+        polygonShape_.Set(verticesVector.data(), verticesVector.size());
+
+        fixtureDef_.shape = &polygonShape_;
+
+        fixtureDef_.density = density;
+        fixtureDef_.friction = friction;
+        fixtureDef_.restitution = restitution;
+
+        jsonDisplayData_ +="]";
+
     }
 
     //TODO create method for creating polygon shape fixture

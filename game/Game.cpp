@@ -9,7 +9,9 @@
 //TODO create separate file for game static settings
 std::stringstream Game::threadOut;
 std::mutex Game::mutex_;
-double Game::MS_PER_FRAME = 1000.0/60.0;
+
+
+double Game::MS_PER_FRAME = 1000.0/30.0;
 
 
 void Game::run() {
