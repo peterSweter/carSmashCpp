@@ -9,6 +9,8 @@ Box2dManager::Box2dManager() {
     b2Vec2 gravity(0.0,0.0);
     bool doSleep = true;
     this->gameWorld_ = std::make_shared<b2World>(gravity);
+
+    this->gameWorld_->SetContactListener(&gameContactListener_);
 }
 
 void Box2dManager::worldStep() {

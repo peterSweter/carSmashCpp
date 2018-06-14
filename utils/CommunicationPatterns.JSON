@@ -54,6 +54,7 @@
       {
         "t": "car",
         "nick": "halinka",
+        "hp" : 0.87 ,
         "bodies": [
           {
             "x": 1,

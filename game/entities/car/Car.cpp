@@ -6,6 +6,7 @@
 #include "../../Game.h"
 #include "CarPart.h"
 #include "../../../utils/Utilities.h"
+#include "../../box2D/interactionManager/collideMasks.h"
 
 Car::Car(std::shared_ptr<CarPrototype> carPrototype, Box2dManager *box2dManager) : box2dManager_(box2dManager) {
 
@@ -32,7 +33,10 @@ Car::Car(std::shared_ptr<CarPrototype> carPrototype, Box2dManager *box2dManager)
         std::cout << "[Car] Creating car parts. " << std::endl;
 
         for (auto carPart : carBodyPrototype.second->carParts_) {
-            carParts_.emplace(carPart.first, std::make_shared<CarPart>(body, carPart.second.get()));
+
+            auto tmpCarPart = std::make_shared<CarPart>(body, carPart.second.get());
+            tmpCarPart->setEntity(this);
+            carParts_.emplace(carPart.first,tmpCarPart );
 
         }
 
@@ -90,6 +94,11 @@ Car::Car(std::shared_ptr<CarPrototype> carPrototype, Box2dManager *box2dManager)
    // exit(-1);
 
 
+    this->setHealth(carPrototype->health_);
+    this->maxHealth = carPrototype->health_;
+    this->setMyMask(collideMask::car);
+    this->setMaskCollideWith(collideMask::car);
+
 }
 
 std::shared_ptr<Json> Car::getJsonData() {
@@ -105,6 +114,7 @@ std::shared_ptr<Json> Car::getJsonData() {
     jsonData->emplace("nick", player_->getNickname());
     jsonData->emplace("x", getPosition().x);
     jsonData->emplace("y", getPosition().y);
+    jsonData->emplace("hp", this->getHealth()/this->maxHealth);
 
     Json bodiesJsonArray;
 
@@ -168,3 +178,10 @@ void Car::update() {
 
    carEngine_.update();
 }
+
+void Car::dealDamage(InteractiveEntityPartA *entity, double dmg) {
+
+    socore_ += entity->takeDamage(dmg * this->getDamageFactor());
+
+}
+

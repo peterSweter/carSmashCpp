@@ -6,6 +6,7 @@
 #define CARSMASHCPP_BOX2DMANAGER_H
 
 #include <Box2D/Box2D.h>
+#include "interactionManager/GameContactListener.h"
 
 
 class Box2dManager {
@@ -23,6 +24,8 @@ public:
     b2Fixture * createFixture(b2FixtureDef * fixtureDef);
     void queryWorld(b2QueryCallback * queryCallback, b2AABB);
     b2RevoluteJoint* createJoint(b2RevoluteJointDef*);
+
+    GameContactListener gameContactListener_;
 };
 
 

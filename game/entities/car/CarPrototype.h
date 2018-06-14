@@ -18,9 +18,12 @@ using Json = nlohmann::json;
 
 class CarPrototype {
     std::string name_;
+
 public:
     std::map<std::string, std::shared_ptr<CarBodyPrototype>> carBodyPrototypes_;
     std::vector<JointPrototype> joints_;
+
+    double health_;
 
     CarPrototype(Json & json);
     void parseJson(Json & json);

@@ -24,6 +24,9 @@ void CarPrototype::parseJson(Json &json) {
     for(Json & jointJson : json["joints"]){
         joints_.push_back(JointPrototype(jointJson));
     }
+
+    health_ = json["maxHealth"].get<double>();
+
 }
 
 CarPrototype::~CarPrototype() {

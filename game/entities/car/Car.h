@@ -16,14 +16,17 @@
 #include "../../player/PlayerI.h"
 #include "../../input/KeyboardManager.h"
 #include "CarEngine/CarEngine.h"
+#include "../EntityI.h"
 
 
-class Car : public DataCollectableOnceI {
+class Car : public DataCollectableOnceI, public EntityI {
 
     Box2dManager * box2dManager_;
     PlayerI * player_;
     KeyboardManager * keyboardManager_ = nullptr;
     CarEngine carEngine_;
+    double socore_ = 0;
+    double maxHealth;
 
 
 public:
@@ -39,6 +42,8 @@ public:
 
     //TODO checking if data was fetched already from this object
     std::shared_ptr<Json> getJsonData();
+
+    void dealDamage(InteractiveEntityPartA *entity, double dmg) override;
 
 
 };
