@@ -20,7 +20,7 @@ private:
     std::string nickname_;
     KeyboardManager keyboardManager_;
     DataCollector dataCollector_;
-    bool sessionAlive_ = true;
+
 
 
     //init data string for car model
@@ -42,6 +42,8 @@ public:
     void handleMessage(std::shared_ptr<Json> message) override;
     std::shared_ptr<Json> getDataFrame();
     bool isAlive();
+
+    ~ GameSession();
 };
 
 

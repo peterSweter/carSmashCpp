@@ -20,7 +20,7 @@ CarPart::CarPart(b2Body * body, CarPartPrototype *carPartPrototype) :  body_(bod
 }
 
 std::shared_ptr<Json> CarPart::getJsonData() {
-    std::cout << "[CarPart] getJsonData " << *carPartPrototype_->getJsonDisplayData() << std::endl;
+
 
     return std::make_shared<Json>(Json::parse(*carPartPrototype_->getJsonDisplayData()));
 

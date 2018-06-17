@@ -29,13 +29,8 @@ public:
     Player(std::shared_ptr<SessionI> &&sessionI, CarFactory *carFactory, Box2dManager *box2dManager);
 
     void update();
-
     void handleMessage(std::shared_ptr<Json> message) override;
-
-
     std::shared_ptr<GameSession> getGameSession();
-
-
 
 };
 

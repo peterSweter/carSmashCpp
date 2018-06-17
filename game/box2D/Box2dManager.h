@@ -26,6 +26,8 @@ public:
     b2RevoluteJoint* createJoint(b2RevoluteJointDef*);
 
     GameContactListener gameContactListener_;
+
+    std::shared_ptr<b2World> & getGameWorld();
 };
 
 

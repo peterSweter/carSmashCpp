@@ -25,7 +25,7 @@ private:
     Box2dManager * box2dManager_;
     std::string jsonData_;
     bool updateCount_ = false;
-
+    bool dbg_ = false;
 
 
 public:

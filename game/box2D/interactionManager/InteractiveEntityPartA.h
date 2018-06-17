@@ -11,7 +11,7 @@
 class InteractiveEntityPartA {
 private:
     EntityI * entity_ = nullptr;
-    double durability_;
+    double durability_ = 0.9;
 
 public:
 

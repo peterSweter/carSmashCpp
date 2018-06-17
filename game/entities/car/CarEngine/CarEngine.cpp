@@ -6,6 +6,7 @@
 #include "CarEngine.h"
 
 
+
 void CarEngine::setFrontTires(b2Body *tire0, b2Body *tire1) {
 
     frontTires[0] = tire0;
@@ -19,7 +20,7 @@ void CarEngine::setKeyboardManager(KeyboardManager *keyboardManager) {
 
 void CarEngine::update() {
 
-    std::cout << "[CarEngine] Update " << std::endl;
+
 
     for(int i =0 ; i < 4; i++) {
         updateFriction(tires[i]);
@@ -127,4 +128,24 @@ void CarEngine::setFrontJoints(std::vector<b2RevoluteJoint *> &frontJoints) {
     for(int i=0; i < 2; i++){
         frontJoints_[i] = frontJoints[i];
     }
+}
+
+void CarEngine::setBackJoints(std::vector<b2RevoluteJoint *> &backJoints) {
+    for(int i=0; i < 2; i++){
+        backJoints_[i] = backJoints[i];
+    }
+}
+
+CarEngine::~CarEngine() {
+    //first delete joints than bodies
+}
+
+void CarEngine::deleteJoints( Box2dManager * box2dManager_) {
+
+    for(int i=0; i <2; i++){
+        box2dManager_->getGameWorld()->DestroyJoint(frontJoints_[i]);
+        box2dManager_->getGameWorld()->DestroyJoint(backJoints_[i]);
+    }
+
+
 }

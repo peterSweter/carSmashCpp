@@ -14,7 +14,7 @@ Car::Car(std::shared_ptr<CarPrototype> carPrototype, Box2dManager *box2dManager)
 
     // creating bodies:
 
-    std::cout << "[Car] Constructor" << std::endl;
+
 
     for (auto carBodyPrototype : carPrototype->carBodyPrototypes_) {
 
@@ -30,7 +30,7 @@ Car::Car(std::shared_ptr<CarPrototype> carPrototype, Box2dManager *box2dManager)
 
 
         //creating carparts
-        std::cout << "[Car] Creating car parts. " << std::endl;
+
 
         for (auto carPart : carBodyPrototype.second->carParts_) {
 
@@ -41,7 +41,6 @@ Car::Car(std::shared_ptr<CarPrototype> carPrototype, Box2dManager *box2dManager)
         }
 
 
-        std::cout << "[Car] Created body. " << std::endl;
 
     }
 
@@ -55,6 +54,7 @@ Car::Car(std::shared_ptr<CarPrototype> carPrototype, Box2dManager *box2dManager)
     //TODO WARNING MEMORY LEAK MEMORY HAZARD WOLOLO
 
     std::vector<b2RevoluteJoint *> frontJoints;
+    std::vector<b2RevoluteJoint *> backJoints;
 
     for (JointPrototype &jointPrototype : carPrototype->joints_) {
 
@@ -80,6 +80,8 @@ Car::Car(std::shared_ptr<CarPrototype> carPrototype, Box2dManager *box2dManager)
 
         if(jointPrototype.bodyBID_ == "tire3" || jointPrototype.bodyBID_ == "tire4"){
             frontJoints.push_back(tmpJoint);
+        }else{
+            backJoints.push_back(tmpJoint);
         }
 
         std::cout << "joint check: " << jointPrototype.bodyAID_ << " " << jointPrototype.bodyBID_ << " "
@@ -89,6 +91,7 @@ Car::Car(std::shared_ptr<CarPrototype> carPrototype, Box2dManager *box2dManager)
     }
 
     this->carEngine_.setFrontJoints(frontJoints);
+    this->carEngine_.setBackJoints(backJoints);
 
     //TODO debug joints :/
    // exit(-1);
@@ -103,7 +106,7 @@ Car::Car(std::shared_ptr<CarPrototype> carPrototype, Box2dManager *box2dManager)
 
 std::shared_ptr<Json> Car::getJsonData() {
 
-    std::cout << "[Car::getJsonData()] " << std::endl;
+
 
     //TODO consider caching more display data
     //TODO change to nlohman::josn and chache
@@ -129,16 +132,11 @@ std::shared_ptr<Json> Car::getJsonData() {
         bodyJsonObj.emplace("angle", body->GetAngle());
 
 
-        std::cout << "[Car] Inside bodies data collecting" << std::endl;
-
         Json fixturesArray;
 
         for (b2Fixture *f = b.second->GetFixtureList(); f; f = f->GetNext()) {
 
             fixturesArray.push_back(*reinterpret_cast<CarPart *>(f->GetUserData())->getJsonData());
-            std::cout << "[Car] succesfull conversion" << std::endl;
-
-
         }
 
 
@@ -149,7 +147,7 @@ std::shared_ptr<Json> Car::getJsonData() {
     jsonData->emplace("bodies", bodiesJsonArray);
 
 
-    std::cout << "[Car] Json parsing test" << jsonData->dump() << std::endl;
+  //  std::cout << "[Car] Json parsing test" << jsonData->dump() << std::endl;
 
     return jsonData;
 }
@@ -181,7 +179,24 @@ void Car::update() {
 
 void Car::dealDamage(InteractiveEntityPartA *entity, double dmg) {
 
-    socore_ += entity->takeDamage(dmg * this->getDamageFactor());
+    score_ += entity->takeDamage(dmg * this->getDamageFactor());
 
+    std::cerr << score_ << std::endl;
+}
+
+Car::~Car() {
+
+    std::cout << "[Car] Deconstructor." << std::endl;
+
+    this->carEngine_.deleteJoints(this->box2dManager_);
+
+    for(auto it : bodies_){
+        box2dManager_->getGameWorld()->DestroyBody(it.second);
+    }
+
+}
+
+double Car::getScore() {
+    return score_;
 }
 

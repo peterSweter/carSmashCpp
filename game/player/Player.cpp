@@ -7,6 +7,9 @@
 
 void Player::update() {
 
+
+
+
     while (!sessionI_->getMessages()->empty()) {
 
         auto tmpMessage = std::move(sessionI_->getMessages()->front());
@@ -21,14 +24,16 @@ void Player::update() {
     }
 
     if (gameSessionI_) {
-        Game::threadOut << "Sending message" << std::endl;
-        gameSessionI_->update();
 
         if(!gameSessionI_->isAlive()){
+            std::cout << "[Player]  player car is dead  :(. " << std::endl;
+            //TODO message to client about tragic accident.
             gameSessionI_.reset();
+        }else{
+            gameSessionI_->update();
+            sessionI_->sendJSON(gameSessionI_->getDataFrame());
         }
 
-        sessionI_->sendJSON(gameSessionI_->getDataFrame());
 
     }
 

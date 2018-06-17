@@ -10,6 +10,7 @@
 #include <Box2D/Dynamics/Joints/b2RevoluteJoint.h>
 #include "../../../input/KeyboardManager.h"
 #include "../../../../utils/Utilities.h"
+#include "../../../box2D/Box2dManager.h"
 
 class CarEngine {
 
@@ -20,6 +21,7 @@ private:
     b2Body * tires[4];
 
     b2RevoluteJoint * frontJoints_[2];
+    b2RevoluteJoint * backJoints_[2];
 
     void kilLateralVelocity();
     b2Vec2 getLateralVelocity(b2Body * body);
@@ -28,9 +30,9 @@ private:
     void updateDrive(b2Body *body);
     void updateSteering();
 
-    float maxForwardSpeed_  = 10.0;
+    float maxForwardSpeed_  = 6.0;
     float maxBackWardSpeed_ = -2.5;
-    float maxDriveForce_ = 5.0;
+    float maxDriveForce_ = 4.0;
 
     float lockAngle = 40.0 * DEGTORAD;
     float turnSpeedPerSecond = 320.0 * DEGTORAD;
@@ -44,7 +46,12 @@ public:
     void setFrontTires(b2Body *tire0, b2Body *tire1);
     void setTires(b2Body *tire0, b2Body *tire1,b2Body *tire3, b2Body *tire4);
     void setFrontJoints(std::vector<b2RevoluteJoint *> &);
+    void setBackJoints(std::vector<b2RevoluteJoint *> &);
     void setKeyboardManager(KeyboardManager * keyboardManager);
+
+    void deleteJoints(Box2dManager * box2dManager_);
+
+    ~CarEngine();
 
 };
 

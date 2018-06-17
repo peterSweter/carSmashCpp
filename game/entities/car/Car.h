@@ -8,6 +8,7 @@
 
 #include <map>
 #include <Box2D/Box2D.h>
+#include <iostream>
 #include "CarPart.h"
 #include "CarPrototype.h"
 #include "../../box2D/Box2dManager.h"
@@ -25,7 +26,7 @@ class Car : public DataCollectableOnceI, public EntityI {
     PlayerI * player_;
     KeyboardManager * keyboardManager_ = nullptr;
     CarEngine carEngine_;
-    double socore_ = 0;
+    double score_ = 0;
     double maxHealth;
 
 
@@ -39,13 +40,14 @@ public:
     void setKeyboardManager(KeyboardManager * keyboardManager);
     void update();
     b2Vec2 getPosition();
+    double getScore();
 
     //TODO checking if data was fetched already from this object
     std::shared_ptr<Json> getJsonData();
 
     void dealDamage(InteractiveEntityPartA *entity, double dmg) override;
 
-
+    ~Car();
 };
 
 

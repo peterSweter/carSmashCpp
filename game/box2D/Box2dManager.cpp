@@ -28,3 +28,7 @@ void Box2dManager::queryWorld(b2QueryCallback *queryCallback, b2AABB aabb) {
 b2RevoluteJoint *Box2dManager::createJoint(b2RevoluteJointDef * revoluteJointDef) {
     return (b2RevoluteJoint*)gameWorld_->CreateJoint( revoluteJointDef );
 }
+
+std::shared_ptr<b2World> &Box2dManager::getGameWorld() {
+    return this->gameWorld_;
+}

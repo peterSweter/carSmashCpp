@@ -22,7 +22,8 @@ std::string DataCollector::getJsonData(b2Vec2 playerPosition, DataCollectableOnc
 
     jsonData_ +="]}";
 
-    std::cout << "[DataCollector::getJsonData] collected json" << jsonData_ <<  std::endl;
+    if(dbg_)
+        std::cout << "[DataCollector::getJsonData] collected json" << jsonData_ <<  std::endl;
 
     return jsonData_;
 
@@ -45,7 +46,7 @@ void DataCollector::recenterAABB(b2Vec2 playerPos) {
 }
 
 bool DataCollector::ReportFixture(b2Fixture *fixture) {
-    std::cout << "[DataCollector::ReportFixture]" << std::endl;
+
     //TODO create interface for querying data
     //return true;
     if(DataCollectableOnceI * dataCollectable = reinterpret_cast<DataCollectableOnceI*>(fixture->GetBody()->GetUserData())){
@@ -60,7 +61,6 @@ bool DataCollector::ReportFixture(b2Fixture *fixture) {
             jsonData_+= jsonColectedPtr->dump();
         }
 
-        std::cout << "[DataCollector::ReportFixture]  succesfull conversion" <<  std::endl;
 
     }else{
         std::cout << "[DataCollector::ReportFixture]  Unsuccesfull conversion" <<  std::endl;

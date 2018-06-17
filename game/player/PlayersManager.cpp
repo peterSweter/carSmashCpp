@@ -9,6 +9,11 @@
 
 void PlayersManager::update() {
 
+    //TODO delete disconected players
+    for(auto it = playersList_.begin(); it != playersList_.end(); it++){
+
+    }
+
     //TODO  check if server/I has/have  new session
 
     while(!receivedSessionQ_.empty()){

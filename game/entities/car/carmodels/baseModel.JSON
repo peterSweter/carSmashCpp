@@ -103,7 +103,7 @@
         },
         {
           "carPartID": "bumper",
-          "durability": 0.1,
+          "durability": 0.9,
           "shape": "polygon",
           "density": 1,
           "restitution": 1,

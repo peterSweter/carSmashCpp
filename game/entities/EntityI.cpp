@@ -2,6 +2,7 @@
 // Created by peter on 3/31/18.
 //
 
+#include <iostream>
 #include "EntityI.h"
 
 void EntityI::setHealth(double val) {
@@ -25,6 +26,7 @@ double EntityI::getHealth() {
 }
 
 int EntityI::getMask() {
+
     return myMask_;
 }
 
@@ -33,7 +35,9 @@ int EntityI::getMaskCollitdeWith() {
 }
 
 double EntityI::takeDamage(double dmg) {
-    return healthPoints_ -= dmg;
+    std::cerr << "dmg taken --- : " << dmg << std::endl;
+    healthPoints_ -= dmg;
+    return dmg;
 }
 
 double EntityI::getDamageFactor() {

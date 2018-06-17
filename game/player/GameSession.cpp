@@ -32,11 +32,9 @@ void GameSession::handleInput(std::shared_ptr<Json> msg) {
 
 void GameSession::update() {
 
-
     // TODO sendign update frame specification
     // TODO push game session logic there ?
 
-    std::cout << "[GameSession] Update. " << std::endl;
 
     car_->update();
 
@@ -85,11 +83,14 @@ void GameSession::handleMessage(std::shared_ptr<Json> message) {
 
 std::shared_ptr<Json> GameSession::getDataFrame() {
 
-    std::cout << "[GameSession] getDataFrame" << std::endl;
     Json json = Json::parse(dataCollector_.getJsonData(getCar()->getPosition(), getCar().get()));
     return std::make_shared<Json>(json);
 }
 
 bool GameSession::isAlive() {
-    return this->sessionAlive_;
+    return this->car_->isAlive();
+}
+
+GameSession::~GameSession() {
+    std::cout << "[GameSession] Deconstructor." << std::endl;
 }
